@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{common :: css}"></th:block>
+    <style>
+        table{
+            border-collapse: collapse;
+            border: solid red;
+        }
+        td{
+            border-width: thin;
+        }
+    </style>
+</head>
+<body>
+<nav th:replace="~{common :: header}"></nav>
+<a class="btn btn-secondary" href="/">Quay lại</a>
+<div class="container">
+    <table>
+        <tr>
+            <td>no</td>
+            <td>Category</td>
+            <td>Content</td>
+        </tr>
+        <tr th:each="blog,  status : ${listBlog}" >
+            <td th:text="${status.count}"></td>
+            <td th:text="${blog.getCategory()}"></td>
+            <td th:text="${blog.getContent()}"></td>
+        </tr>
+    </table>
+</div>
+<script th:replace="~{common :: js}"></script>
+</body>
+</html>
