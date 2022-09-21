@@ -19,7 +19,10 @@ public class UserDto implements Validator {
     @Pattern(regexp = "[A-Za-z]+", message = "Wrong format !!! (@Pattern)")
     private String lastName;
 
-    private long phoneNumb;
+    @NotBlank(message = "please input !")
+    @Pattern(regexp = "^((090)|(091)|(\\\\(84\\\\)+90)|(\\\\(84\\\\)+91))[0-9]{7}$",
+            message = "Nhập số điện thoại Việt Nam")
+    private String phoneNumb;
 
     @Min(18)
     private int age;
@@ -46,11 +49,11 @@ public class UserDto implements Validator {
         this.lastName = lastName;
     }
 
-    public long getPhoneNumb() {
+    public String getPhoneNumb() {
         return phoneNumb;
     }
 
-    public void setPhoneNumb(long phoneNumb) {
+    public void setPhoneNumb(String phoneNumb) {
         this.phoneNumb = phoneNumb;
     }
 
@@ -78,7 +81,7 @@ public class UserDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UserDto userDto = (UserDto) target;
-        if (!userDto.firstName.matches("[A-Za-z ]+")){
+        if (!userDto.firstName.matches("[A-Za-z ]+")) {
             errors.rejectValue("name",
                     "create.name",
                     "wrong format name !! (custom)");
