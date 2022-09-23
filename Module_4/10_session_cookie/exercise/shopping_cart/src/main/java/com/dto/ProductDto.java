@@ -1,6 +1,7 @@
 package com.dto;
 
 import javax.persistence.Column;
+import java.util.Objects;
 
 public class ProductDto {
 
@@ -40,6 +41,7 @@ public class ProductDto {
 
     public void setName(String name) {
         this.name = name;
+
     }
 
     public String getImage() {
@@ -64,5 +66,18 @@ public class ProductDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDto that = (ProductDto) o;
+        return Double.compare(that.price, price) == 0 && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(image, that.image) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, image, price, description);
     }
 }

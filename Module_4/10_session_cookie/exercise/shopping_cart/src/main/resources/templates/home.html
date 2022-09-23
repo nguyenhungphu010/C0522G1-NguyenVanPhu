@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
 </head>
 <body>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Image</th>
+        <th scope="col">Description</th>
+        <th scope="col">price</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product :${productList}">
+        <td th:text="${product.name}"></td>
+        <td><a>
+            <img th:src="@{${product.image}}" style="width: 200px; height: auto">
+        </a></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.price}"></td>
+        <td>
+            <a class="btn btn-success" role="button" th:href="@{/add/__${product.id}__}">
+                +
+            </a>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    th:attr="data-bs-target='#staticBackdropDelete'+ ${product.id}"  >
+<!--                th:onclick="'showDetails('+${product.id}+')'"-->
+                Details
+            </button>
+            <!--Modal -->
+            <div class="modal fade" th:id="staticBackdropDelete+ ${product.id}"  data-bs-backdrop="static"
+                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <form th:action="@{/details}" method="post" id="formDelete">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Product Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">price</th>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="${product.name}"></td>
+                                        <td><a>
+                                            <img th:src="@{${product.image}}" style="width: 200px; height: auto">
+                                        </a></td>
+                                        <td th:text="${product.description}"></td>
+                                        <td th:text="${product.price}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <!--                    <button type="submit" class="btn btn-primary">YES</button>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
+
+
+<!--Show information for details -->
+<script>
+    function showDetails(id){
+        console.log(id);
+        document.getElementById("productId").value = id;
+    }
+</script>
+<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

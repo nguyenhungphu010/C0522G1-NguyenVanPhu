@@ -20,5 +20,13 @@ public class CartDto {
     public void setProductDtoMap(Map<ProductDto, Integer> productDtoMap) {
         this.productDtoMap = productDtoMap;
     }
+    public void addProduct( ProductDto productDto){
+        if (productDtoMap.containsKey(productDto)){
+            Integer currentValue = productDtoMap.get(productDto);
+            productDtoMap.put(productDto, currentValue +1); // update
+        }else
+            productDtoMap.put(productDto, 1); // add
+    }
+
 
 }

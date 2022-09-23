@@ -15,7 +15,7 @@ public class Product {
     private String image;
     @Column(name = "price")
     private double price;
-    @Column(name = "description", columnDefinition = "LONGBLOB")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     public Product(Integer id, String name, String image, double price, String description) {
@@ -27,6 +27,7 @@ public class Product {
     }
 
     public Product() {
+
     }
 
     public Integer getId() {
