@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class BookRentingAspect {
     @Autowired
-    private ITrafficService trafficService;
+    private ITrafficService
 
     @AfterReturning(pointcut = " execution(public * com.controller.BookController.*(..)) ")
     public void logHistory(JoinPoint joinPoint) {

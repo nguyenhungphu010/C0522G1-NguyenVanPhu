@@ -14,7 +14,7 @@ public class DetailBook {
     private Integer id;
     private Integer bookCode;
 
-    @Value("false")
+    @Value("true")
     private Boolean status;
 
     @ManyToOne

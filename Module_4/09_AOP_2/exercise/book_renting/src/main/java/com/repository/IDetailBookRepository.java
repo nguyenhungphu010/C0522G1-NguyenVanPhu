@@ -15,7 +15,7 @@ public interface IDetailBookRepository extends JpaRepository<DetailBook, Integer
     @Query(value = "UPDATE detail_book set status =1 where (id= :detailID); ", nativeQuery = true)
     void setStatus(@Param("detailID") int detailID);
 
-    @Query(value = "select * from detail_book where (book_code = :bookCode):", nativeQuery = true)
+    @Query(value = "select * from detail_book where (book_code = :bookCode);", nativeQuery = true)
     DetailBook getByBookCode(@Param("bookCode") Integer bookCode);
 
     @Modifying
