@@ -1,6 +1,5 @@
 package com.dto;
 
-import javax.persistence.Column;
 import java.util.Objects;
 
 public class ProductDto {

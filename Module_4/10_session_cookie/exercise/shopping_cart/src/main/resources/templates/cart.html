@@ -13,6 +13,8 @@
         <th scope="col">Image</th>
         <th scope="col">price</th>
         <th scope="col">Quantity</th>
+        <th scope="col">Action</th>
+        <th scope="col">Total</th>
     </tr>
     </thead>
     <tbody>
@@ -22,7 +24,18 @@
             <img th:src="@{${product.key.image}}" style="width: 200px; height: auto">
         </a></td>
         <td th:text="${product.key.price}"></td>
-        <td th:text="${product.value}"></td>
+        <td th:text="${product.value}">
+        </td>
+        <td>
+            <a class="btn btn-success" role="button" th:href="@{cart/increase/__${product.key.id}__}">
+                +
+            </a>
+            <a class="btn btn-success" role="button" th:href="@{cart/decrease/__${product.key.id}__}">
+                -
+            </a>
+        </td>
+        <td th:text="${cart.totalPayment()}">
+        </td>
     </tr>
     </tbody>
 </table>
