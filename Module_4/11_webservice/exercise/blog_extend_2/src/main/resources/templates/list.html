@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{common :: css}"></th:block>
+</head>
+<body>
+<nav th:replace="~{common :: header}"></nav>
+<div>
+    <form action="/search" id="formSeachCategory">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search"
+               th:value="${search}">
+        <button class="btn btn-outline-success" type="button" th:onclick="|submitForm()|">Search</button>
+        <select class="form-select" aria-label="Default select example" type="text" onchange="submitForm()"
+                name="category" >
+            <!--            <option selected value="0">Thể loại</option>-->
+            <option th:each="cate : ${categorylist}"
+                    th:value="${cate.id}"
+                    th:text="${cate.category}"></option>
+        </select>
+    </form>
+</div>
+<div class="container-fluid">
+    <a class="btn btn-info" href="/add">Thêm mới</a>
+</div>
+<p th:text="${mess}"></p>
+<table class="table table-success table-striped">
+    <tr>
+        <th>STT</th>
+        <th>Tên bài viết</th>
+        <th>Thể loại</th>
+        <th colspan="3">Chức Năng</th>
+    </tr>
+    <tr th:each="blog, status : ${list}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${blog.description}"></td>
+        <td th:text="${blog.category.category}"></td>
+        <td>
+            <a class="btn btn-primary " th:href="@{showDetails(id=${blog.id})}">Xem chi tiết</a>
+        </td>
+        <td>
+            <a class="btn btn-warning " th:href="@{showEdit(id=${blog.id})}">Chỉnh sửa</a>
+        </td>
+        <td>
+            <button class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    th:onclick=|setIdToFormDelete(${blog.id})|>
+                Delete
+            </button>
+        </td>
+    </tr>
+</table>
+<div>
+    <div class="container-fluid">
+        <a th:href="@{/(page=${list.number - 1}, search=${search}, catelogy=${catelogy})}">Trước</a>
+        <span th:text="${list.number + 1}"></span>
+        /
+        <span th:text="${list.totalPages}"></span>
+        <a th:href="@{/(page=${list.number + 1}, search=${search}, catelogy=${catelogy})}">Sau</a>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete confirm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitFormDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="/delete" id="formDelete">
+    <input type="hidden" id="idInput" name="id">
+</form>
+
+<script>
+    function submitForm(){
+        document.getElementById("formSeachCategory").submit()
+    }
+    function setIdToFormDelete(id) {
+        document.getElementById("idInput").value = id;
+    }
+
+    function submitFormDelete() {
+        document.getElementById("formDelete").submit();
+    }
+</script>
+<script th:replace="~{common :: js}"></script>
+</body>
+</html>

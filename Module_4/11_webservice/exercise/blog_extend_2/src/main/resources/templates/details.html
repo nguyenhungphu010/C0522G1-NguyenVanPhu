@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{common :: css}"></th:block>
+</head>
+<body>
+<nav th:replace="~{common :: header}"></nav>
+<a class="btn btn-secondary" href="/">Quay lại</a>
+<div class="container">
+    <div>
+        <h1 th:text="${blog.detail}"></h1>
+        <h1 th:text="${blog.category.category}"></h1>
+    </div>
+</div>
+<script th:replace="~{common :: js}"></script>
+</body>
+</html>
