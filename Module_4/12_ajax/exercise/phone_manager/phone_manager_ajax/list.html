@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>List Smartphone</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--    <script type="text/javascript">-->
+
+    <!--        function addNewSmartPhone() {-->
+    <!--            let producer = $('#producer').value();-->
+    <!--            let model = $('#model').value();-->
+    <!--            let price = $('#price').value();-->
+    <!--            let newSmartphone = {-->
+    <!--                producer: producer,-->
+    <!--                model: model,-->
+    <!--                price: price-->
+    <!--            };-->
+    <!--            // goi ajax-->
+    <!--            $.ajax({-->
+    <!--                headers: {-->
+    <!--                    'Accept': 'application/json',-->
+    <!--                    'Content-Type': 'application/json'-->
+    <!--                },-->
+    <!--                type: "POST",-->
+    <!--                date: JSON.stringify(newSmartphone),-->
+    <!--                // Teen anh API-->
+    <!--                url: "/smartphones/save",-->
+    <!--                // xu ly thanh cong-->
+    <!--                success: console.log('success')-->
+    <!--            });-->
+    <!--            //  block the default event-->
+    <!--            event.preventDefault();-->
+    <!--        }-->
+
+    <!--        function updateSmartPhone() {-->
+    <!--            let producer = $('#producer').value();-->
+    <!--            let model = $('#model').value();-->
+    <!--            let price = $('#price').value();-->
+    <!--            let newSmartphone = {-->
+    <!--                producer: producer,-->
+    <!--                model: model,-->
+    <!--                price: price-->
+    <!--            };-->
+    <!--            $.ajax({-->
+    <!--                headers: {-->
+    <!--                    'Accept': 'application/json',-->
+    <!--                    'Content-Type': 'application/json'-->
+    <!--                },-->
+    <!--                type: "POST",-->
+    <!--                date: JSON.stringify(newSmartphone),-->
+    <!--                // Teen anh API-->
+    <!--                url: "/smartphones/save",-->
+    <!--                // xu ly thanh cong-->
+    <!--                success: console.log('update successfully')-->
+    <!--            })-->
+    <!--        }-->
+
+    <!--        $(document).ready(function () {-->
+    <!--            $('.updateSmartPhone').click(function (id) {-->
+    <!--                $.ajax({-->
+    <!--                    type: "GET",-->
+    <!--                    url: "http://localhost:8080/smartphones/showUpdate?id=" + id,-->
+    <!--                    success: function (result) {-->
+    <!--                        $("#UpdateProducer").val(result.producer)-->
+    <!--                        $("#UpdateProducer").val(result.model)-->
+    <!--                        $("#UpdateProducer").val(result.price)-->
+    <!--                    },-->
+    <!--                    error: function (resultError) {-->
+    <!--                        alert("error")-->
+    <!--                    }-->
+    <!--                });-->
+    <!--            });-->
+    <!--        })-->
+
+    <!--        function successHandler() {-->
+    <!--            $.ajax({-->
+    <!--                type: "GET",-->
+    <!--                //tên API-->
+    <!--                url: "/smartphones",-->
+    <!--                //xử lý khi thành công-->
+    <!--                success: function (data) {-->
+    <!--                    // hien thi danh sach o day-->
+    <!--                    let content = '    <tr>\n' +-->
+    <!--                        '        <td>Producer</td>\n' +-->
+    <!--                        '        <td>Model</td>\n' +-->
+    <!--                        '        <td>Price</td>\n' +-->
+    <!--                        '        <td>Delete</td>\n' +-->
+    <!--                        '        <td>Update</td>\n' +-->
+    <!--                        '    </tr>';-->
+    <!--                    for (let i = 0; i < data.length; i++) {-->
+    <!--                        content += getSmartphone(data[i]);-->
+    <!--                    }-->
+    <!--                    document.getElementById('smartphoneList').innerHTML = content;-->
+    <!--                }-->
+    <!--            });-->
+    <!--        }-->
+
+    <!--        function getSmartphone(smartphone) {-->
+    <!--            return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +-->
+    <!--                `<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td>` +-->
+    <!--                `<td><a class="updateSmartPhone" href="${smartphone.id}">Update</a></td></tr>`;-->
+    <!--        }-->
+
+
+    <!--    </script>-->
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border: gray;
+        }
+
+        td {
+            border: solid 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/mdb.dark.min.css">
+    <script src="js/mdb.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<form id="add-smartphone">
+    <table>
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" th:id="producer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" th:id="model" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" th:id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+        </tr>
+    </table>
+</form>
+<form id="update-smartphone">
+    <table>
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" th:id="UpdateProducer" name="UpdateProducer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" th:id="UpdateModel" name="UpdateModel" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" th:id="UpdatePrice" name="UpdatePrice" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update" onclick="updateSmartPhone()"></td>
+        </tr>
+    </table>
+</form>
+<h1>Smartphone List</h1>
+<table id="smartphoneList" style="border: thin" class="table table-bordered">
+    <tr style="text-align: center">
+        <th>Producer</th>
+        <th>Model</th>
+        <th>Price</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    <tbody id="tableBody">
+
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/smartphones/list",
+            type: "GET",
+            dataType: "json",
+            success: function (smartphones) {
+                console.log(smartphones)
+                let tr = [];
+                for (let i = 0; i < smartphones.length; i++) {
+                    tr.push("<tr>");
+                    tr.push("<td>" + smartphones[i].producer + "</td>")
+                    tr.push("<td>" + smartphones[i].model + "</td>")
+                    tr.push("<td>" + smartphones[i].price + "</td>")
+                    tr.push("<td >" + "<a class=\"deleteSmartphone\">Delete</a>" + "</td>")
+                    tr.push("<td>" + "<a class=\"updateSmartphone\">Update</a>" + "</td>")
+                }
+                $("#tableBody").append(tr.join(""));
+            }
+        })
+    })
+    $('body').on('click', '.deleteSmartphone', function (event)  {
+        console.log('test function')
+        //sư kiện nào thực hiện Ajax
+        // $('.deleteSmartphone').click(function (event) {
+        //lay du lieu
+        let a = $(this);
+        let smartphoneId = a.attr("href");
+        // goi ajax
+        $.ajax({
+            type: "DELETE",
+            //tên API
+            url: `http://localhost:8080/smartphones/${smartphoneId}`,
+            //xử lý khi thành công
+            success: function (data) {
+                console.log(data)
+                a.parent().parent().remove();
+
+            }
+
+        });
+        //chặn sự kiện mặc định của thẻ
+        event.preventDefault();
+        // });
+    })
+</script>
+</body>
+</html>
