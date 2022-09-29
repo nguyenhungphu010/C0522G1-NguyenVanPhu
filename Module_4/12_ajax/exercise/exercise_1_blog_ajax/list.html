@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/mdb.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link" href="#"></a>
+                <a class="nav-link" href="#"></a>
+                <a class="nav-link disabled"></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <div class="row w-50 mx-auto">
+        <div class="col-lg-10">
+            <input class="form-control" type="text" id="inputSearch">
+        </div>
+        <div class="col-lg-2">
+            <button class="btn btn-primary bg-momo" id="btnSearch" >Search</button>
+        </div>
+    </div>
+    <div class="row w-50 mx-auto mt-4">
+        <div class="col-lg-12">
+            <h2>List Phone</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Content</th>
+                    <th scope="col" colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tbody id="bodyBlog">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav aria-label="..." class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" id="aPrevious">Previous</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" id="pageNumber">1/2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" id="aNext">Next</a>
+            </li>
+        </ul>
+    </nav>
+    <div>
+        <input class="btn btn-primary" type="button" id="load" value="Xem thêm">
+    </div>
+
+</div>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+    let curPage = 0;
+    let add = 1;
+    let size = 5;
+    function getPageBlog(pageNumber) {
+        let search =  $("#inputSearch").val();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/blog/list?page=" + pageNumber +"&size="+ size +"&search="+search,
+            success: function (blogPage) {
+                let blogList = blogPage.content;
+                console.log(blogList);
+                let htmlStr = '';
+                for (let i= 0 ; i< blogList.length; i ++){
+                    htmlStr += `<tr>
+                        <td>${i + 1}</td>
+                        <td>${blogList[i].id}</td>
+                        <td>${blogList[i].description}</td>
+                        <td>${blogList[i].author}</td>
+                        <td>${blogList[i].content}</td>
+                        <td>
+                            <a href="#">Update</a>
+                        </td>
+                    </tr>`;
+                }
+                $("#bodyBlog").html(htmlStr);
+                console.log(htmlStr)
+            },
+            error: function(resultError) {
+            }
+        });
+    }
+    $("#load").click(function () {
+        size+=add;
+        getPageBlog(curPage,size)
+    });
+    // $("#aPrevious").click(function () {
+    //     getPageBlog(--curPage);
+    // });
+    // $("#aNext").click(function () {
+    //     getPageBlog(++curPage);
+    // });
+    $("#btnSearch").click(function () {
+        getPageBlog(curPage)
+    })
+    getPageBlog(curPage);
+</script>
+</body>
+</html>

@@ -45,7 +45,6 @@ public class BlogRestController {
     @GetMapping("/blog_category/{id}")
     public ResponseEntity<List<Blog>> listBlogCategoryId(@PathVariable int id){
 
-
         List<Blog> blogList = this.blogService.findAllByCategory_Id(id);
         if (blogList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
