@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/smartphones")
-@CrossOrigin("*")
+@CrossOrigin()
 public class SmartphoneController {
 
     @Autowired
@@ -43,12 +43,15 @@ public class SmartphoneController {
         smartphoneService.remove(id);
         return new ResponseEntity<>(smartphone.get(), HttpStatus.NO_CONTENT);
     }
-//    @GetMapping("/showUpdate")
-//    public String showUpdate(@RequestParam Long id, Model model){
-//        Optional<Smartphone> smartphone = smartphoneService.findById(id);
-//        model.addAttribute("smartphone", smartphone);
-//        return "list";
-//    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Smartphone> getSmartphone(@PathVariable Long id){
+        Optional<Smartphone> smartphone = smartphoneService.findById(id);
+        if (smartphone.isPresent()){
+            return new ResponseEntity<>(smartphone.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     @GetMapping("/showUpdate")
     public ResponseEntity<Optional<Smartphone> > showUpdate(@RequestParam Long id){

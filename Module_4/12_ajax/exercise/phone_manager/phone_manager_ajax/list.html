@@ -119,7 +119,7 @@
 </head>
 <body>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
+<button type="button" id="idModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
     Update
 </button>
 
@@ -141,7 +141,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="saveUpdateId">Save changes</button>
             </div>
         </div>
     </div>
@@ -202,6 +202,30 @@
     </tbody>
 </table>
 <script type="text/javascript">
+    function updateSmartphone() {
+        $(document).ready(function () {
+                let producer = $("#updateProducer").val();
+                let model = $("#updateModel").val();
+                let price = $("#updatePrice").val();
+                console.log(producer + ' ' + model + '' + price);
+                let updateSmartphone = {
+                    producer: producer,
+                    model: model,
+                    price: price
+                };
+            $.ajax({
+                url: `http://localhost:8080/smartphones/save`,
+                type: "POST",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(updateSmartphone),
+                success: function () {
+                    showList();
+                    alert("OK");
+                }
+            })
+        })
+    }
+
     function showList() {
         $(document).ready(function () {
             $("#tableBody").empty();
@@ -218,9 +242,7 @@
                         tr.push("<td>" + smartphones[i].model + "</td>")
                         tr.push("<td>" + smartphones[i].price + "</td>")
                         tr.push("<td >" + "<button class=\"deleteSmartphone\"><span hidden>" + smartphones[i].id + "</span>Delete</button></td>")
-                        tr.push("<td >" + " <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateId\">\n" +
-                            "                        Update\n" +
-                            "                        </button>" + "</td>")
+                        tr.push("<td >" + "<button class=\"updateSmartphone\"><span hidden>" + smartphones[i].id + "</span>Update</button></td>")
                     }
                     $("#tableBody").append(tr.join(""));
                 }
@@ -272,6 +294,27 @@
                 alert("OK");
             }
         })
+    })
+    $('body').on('click', '.updateSmartphone', function () {
+        let smartPhoneId = $(this).find(":first-child").text();
+        console.log(smartPhoneId);
+        $.ajax({
+            url: `http://localhost:8080/smartphones/` + smartPhoneId,
+            type: "GET",
+            dataType: "JSON",
+            success: function (smartPhone) {
+                console.log(smartPhone);
+                document.getElementById("idd").value = (smartPhone.id);
+                document.getElementById("updateProducer").value = (smartPhone.producer);
+                document.getElementById("updateModel").value = (smartPhone.model);
+                document.getElementById("updatePrice").value = (smartPhone.price);
+                $("#idModal").click();
+            }
+        })
+
+    })
+    $("#saveUpdateId").click(function () {
+        updateSmartphone();
     })
     showList();
 </script>
