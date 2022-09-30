@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>List Smartphone</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!--    <script type="text/javascript">-->
 
     <!--            function addNewSmartPhone() {-->
@@ -114,9 +115,37 @@
             border: solid 1px;
         }
     </style>
-
+    <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
+    Update
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="updateId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="form">
+                    <div><label hidden for="idd"></label><input hidden name="idd" id="idd"/></div>
+                    <div><label for="updateProducer">producer</label><input name="producer" id="updateProducer"/></div>
+                    <div><label for="updateModel">model</label><input name="model" id="updateModel"/></div>
+                    <div><label for="updatePrice">price</label><input name="price" id="updatePrice"/></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <form id="add-smartphone">
     <table>
         <tr>
@@ -175,6 +204,7 @@
 <script type="text/javascript">
     function showList() {
         $(document).ready(function () {
+            $("#tableBody").empty();
             $.ajax({
                 url: "http://localhost:8080/smartphones/list",
                 type: "GET",
@@ -187,8 +217,10 @@
                         tr.push("<td>" + smartphones[i].producer + "</td>")
                         tr.push("<td>" + smartphones[i].model + "</td>")
                         tr.push("<td>" + smartphones[i].price + "</td>")
-                        tr.push("<td >" + "<a class=\"deleteSmartphone\" href=\"${smartphones[i].id()}\">Delete</a>" + "</td>")
-                        tr.push("<td>" + "<a class=\"updateSmartphone\" href=\"${smartphone.getId()}\">Update</a>" + "</td>")
+                        tr.push("<td >" + "<button class=\"deleteSmartphone\"><span hidden>" + smartphones[i].id + "</span>Delete</button></td>")
+                        tr.push("<td >" + " <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#updateId\">\n" +
+                            "                        Update\n" +
+                            "                        </button>" + "</td>")
                     }
                     $("#tableBody").append(tr.join(""));
                 }
@@ -202,12 +234,12 @@
         // $('.deleteSmartphone').click(function (event) {
         //lay du lieu
         let a = $(this);
-        let smartphoneId = a.attr("href");
-        // goi ajax
+        let smartphoneId = $(this).find(":first-child").text();
+        $("#tableBody").empty();
         $.ajax({
             type: "DELETE",
             //tên API
-            url: `http://localhost:8080/smartphones/${smartphoneId}`,
+            url: `http://localhost:8080/smartphones/` + smartphoneId,
             //xử lý khi thành công
             success: function (data) {
                 console.log(data)
@@ -220,19 +252,21 @@
         // });
     })
     $("#idAddNew").click(function () {
-        let producer = $('#producer').val();
-        let model = $('#model').val();
-        let price = $('#price').val();
+        let producer = $("#producer").val();
+        let model = $("#model").val();
+        let price = $("#price").val();
+        console.log(producer + ' ' + model + '' + price);
         let newSmartphone = {
             producer: producer,
             model: model,
             price: price
         };
+        console.log(newSmartphone)
         $.ajax({
             url: `http://localhost:8080/smartphones/save`,
             type: "POST",
             contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify({newSmartphone}),
+            data: JSON.stringify(newSmartphone),
             success: function () {
                 showList();
                 alert("OK");
@@ -242,5 +276,6 @@
     showList();
 </script>
 
+<script src="js/bootstrap.js"></script>
 </body>
 </html>
