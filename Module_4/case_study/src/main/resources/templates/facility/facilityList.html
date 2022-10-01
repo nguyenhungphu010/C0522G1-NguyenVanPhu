@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<nav th:replace="~{home::navbar1}"></nav>
+<nav th:replace="~{home :: navbar2}"></nav>
+
+<div class="container-fluid align-content-center" id="content">
+    <div class="container-fluid m-auto text-center p-5">
+        <a href="/facilities/create" class="btn btn-success">Create new Service</a>
+    </div>
+    <form class="d-flex w-25 float-end" method="get" th:action="@{/facilities/list}">
+        <input type="hidden" name="action" value="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchParam"  id="inputSearch" >
+        <button class="btn btn-outline-success" type="submit" id="btnSearch">Search</button>
+    </form>
+    <table class="table table-hover text-center" id="myTable">
+        <thead>
+        <tr class="table-info">
+            <td>No.</td>
+            <td>Service Name</td>
+            <td>Area</td>
+            <td>Cost</td>
+            <td>Max People</td>
+            <td>Rental Type</td>
+            <td>Facility Type</td>
+            <td>Standard Room</td>
+            <td>Convenience</td>
+            <td>Pool Area</td>
+            <td>Floor</td>
+            <td>Free Service</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="facility, status: ${facilityList.content}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${facility.name}"></td>
+            <td th:text="${facility.area}"></td>
+            <td th:text="${facility.cost}"></td>
+            <td th:text="${facility.maxPeople}"></td>
+            <td th:text="${facility.rentType.name}"></td>
+            <td th:text="${facility.facilityType.name}"></td>
+            <td th:text="${facility.standardRoom}"></td>
+            <td th:text="${facility.desConvenience}"></td>
+            <td th:text="${facility.poolArea}"></td>
+            <td th:text="${facility.floors}"></td>
+            <td th:text="${facility.facilityFree}"></td>
+            <td><a class="btn btn-outline-warning" th:href="@{/facilities/showEdit(id=${facility.id})}">
+                edit
+            </a></td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdropDelete" th:onclick="'showInfoDelete('+${facility.id}+')'">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/facilities/delete}" method="post" id="formDelete">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="deleteId" name="IdFacility">
+                        <span>Are you sure to delete? </span> <span id="deleteName"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                        <button type="submit" class="btn btn-primary">YES</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Page plit-->
+<nav aria-label="..." class="d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" th:href="@{/facilities/list(page=${facilityList.number - 1})}" id="aPrevious">Previous</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" id="pageNumber">
+                <span th:text="${facilityList.number + 1}"></span>
+                /
+                <span th:text="${facilityList.totalPages}"></span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:href="@{/facilities/list(page=${facilityList.number + 1} )}" id="aNext">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<!--Delete Funtion -->
+<script>
+    function showInfoDelete(id) {
+        console.log(id);
+        document.getElementById("deleteId").value = id;
+    }
+</script>
+<footer th:replace="home :: footer"></footer>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

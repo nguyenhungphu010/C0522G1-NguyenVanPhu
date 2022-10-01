@@ -52,7 +52,6 @@ public class SmartphoneController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
     @GetMapping("/showUpdate")
     public ResponseEntity<Optional<Smartphone> > showUpdate(@RequestParam Long id){
         Optional<Smartphone> smartphone = smartphoneService.findById(id);

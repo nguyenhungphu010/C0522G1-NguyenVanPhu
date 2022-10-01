@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer Information </title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<nav th:replace="~{home::navbar1}"></nav>
+<nav th:replace="~{home :: navbar2}"></nav>
+<div class="container" id="content">
+    <main>
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt="" width="72" height="120">
+            <h2>Furama Customer Management</h2>
+        </div>
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Employee New Information </h4>
+                <form method="post" action="/customers/saveEdit" th:object="${customerDto}">
+                    <input type="hidden" th:field="*{id}" >
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="name" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" value="" required th:field="*{name}">
+
+                        </div>
+
+                        <div class="col-12">
+                            <label for="birthDay" class="form-label">Day of Birth <span class="text-muted"></span></label>
+                            <input type="date" class="form-control" id="birthDay" name="birthDay"  placeholder="yyyy/mm/dd" th:field="*{dateOfBirth}">
+                            <div class="mb-4 text-danger" th:errors="*{dateOfBirth}"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <label  class="form-label">Gender <span class="text-muted"></span></label>
+                            <!--                            <input type="number" class="form-control" id="gender" name="gender" placeholder="01234567" th:field="*{gender}">-->
+                            <select class="form-select" type="text"  th:field="*{gender}">
+                                <option th:value="0" th:text="Female"></option>
+                                <option th:value="1" th:text="Male"></option>
+                            </select>
+
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="IDCard" class="form-label">ID Card <span class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="IDCard" name="IDCard" placeholder="01234567" th:field="*{idCard}">
+                            <div class="mb-4 text-danger" th:errors="*{idCard}"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="phoneNumber" class="form-label">Phone Number <span class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="" th:field="*{phoneNumber}">
+                            <div class="mb-4 text-danger" th:errors="*{phoneNumber}"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email<span class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" th:field="*{email}">
+                            <div class="mb-4 text-danger" th:errors="*{email}"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <label  class="form-label">Customer Type ID</label>
+                            <select class="form-select" type="text"  th:field="*{customerTypeDto.id}">
+                                <option th:each="cus : ${customerType}"
+                                        th:value="${cus.id}"
+                                        th:text="${cus.customer_type}"></option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required th:field="*{address}">
+                            <div class="mb-4 text-danger" th:errors="*{address}"></div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">UPDATE</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<footer th:replace="home :: footer"></footer>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

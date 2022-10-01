@@ -119,7 +119,7 @@
 </head>
 <body>
 <!-- Button trigger modal -->
-<button type="button" id="idModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
+<button type="button" id="idModal" hidden class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateId">
     Update
 </button>
 
@@ -128,16 +128,30 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="form">
-                    <div><label hidden for="idd"></label><input hidden name="idd" id="idd"/></div>
-                    <div><label for="updateProducer">producer</label><input name="producer" id="updateProducer"/></div>
-                    <div><label for="updateModel">model</label><input name="model" id="updateModel"/></div>
-                    <div><label for="updatePrice">price</label><input name="price" id="updatePrice"/></div>
-                </div>
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th><label  for="idd"></label>ID</th>
+                        <td><input readonly name="idd" id="idd"/></td>
+                    </tr>
+                    <tr>
+                        <th><label for="updateProducer">Producer</label></th>
+                        <td><input name="producer" id="updateProducer"/></td>
+                    </tr>
+                    <tr>
+                        <th><label for="updateModel">Model</label></th>
+                        <td><input name="model" id="updateModel"/></td>
+                    </tr>
+                    <tr>
+                        <th><label for="updatePrice">Price</label></th>
+                        <td><input name="price" id="updatePrice"/></td>
+                    </tr>
+                </table>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -168,26 +182,7 @@
         </tr>
     </table>
 </form>
-<form id="update-smartphone">
-    <table>
-        <tr>
-            <td>Producer:</td>
-            <td><input type="text" th:id="UpdateProducer" name="UpdateProducer" placeholder="producer"></td>
-        </tr>
-        <tr>
-            <td>Model:</td>
-            <td><input type="text" th:id="UpdateModel" name="UpdateModel" placeholder="model"></td>
-        </tr>
-        <tr>
-            <td>Price:</td>
-            <td><input type="text" th:id="UpdatePrice" name="UpdatePrice" placeholder="price"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Update" onclick="updateSmartPhone()"></td>
-        </tr>
-    </table>
-</form>
+
 <h1>Smartphone List</h1>
 <table id="smartphoneList" style="border: thin" class="table table-bordered">
     <tr style="text-align: center">
@@ -204,15 +199,15 @@
 <script type="text/javascript">
     function updateSmartphone() {
         $(document).ready(function () {
-                let producer = $("#updateProducer").val();
-                let model = $("#updateModel").val();
-                let price = $("#updatePrice").val();
-                console.log(producer + ' ' + model + '' + price);
-                let updateSmartphone = {
-                    producer: producer,
-                    model: model,
-                    price: price
-                };
+            let producer = $("#updateProducer").val();
+            let model = $("#updateModel").val();
+            let price = $("#updatePrice").val();
+            console.log(producer + ' ' + model + '' + price);
+            let updateSmartphone = {
+                producer: producer,
+                model: model,
+                price: price
+            };
             $.ajax({
                 url: `http://localhost:8080/smartphones/save`,
                 type: "POST",
