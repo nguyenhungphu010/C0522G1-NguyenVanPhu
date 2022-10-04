@@ -71,9 +71,8 @@ public class SmartphoneController {
         try{
             this.smartphoneService.save(smartphone);
         }catch (Exception e){
-            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return  new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 }

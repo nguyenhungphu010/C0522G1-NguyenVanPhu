@@ -1,6 +1,7 @@
 package com.model.employee;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.model.contract.Contract;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Employee {
     private String address;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
 

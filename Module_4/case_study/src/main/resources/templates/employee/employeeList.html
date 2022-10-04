@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+</head>
+<body>
+<nav th:replace="~{home::navbar1}"></nav>
+<nav th:replace="~{home :: navbar2}"></nav>
+
+<!--Table-->
+<div class="container-fluid align-content-center" id="content">
+    <!--    <div class="container-fluid m-auto text-center p-5">-->
+    <!--        <a href="/employees/create" class="btn btn-success">Create new Employee</a>-->
+    <!--    </div>-->
+    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+            data-bs-target="#staticBackdropCreate">
+        Create new Employee
+    </button>
+    <form class="d-flex w-25 float-end" method="get" th:action="@{/api/employees/list}">
+        <input type="hidden" name="action" value="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchParam"
+               id="inputSearch" th:value="${searchParam}">
+        <button class="btn btn-outline-success" type="submit" id="btnSearch">Search</button>
+    </form>
+    <table class="table table-hover text-center" id="myTable">
+        <thead>
+        <tr class="table-info">
+            <td>No.</td>
+            <td>Name</td>
+            <td>Day of Birth</td>
+            <td>Phone Number</td>
+            <td>Email</td>
+            <td>Address</td>
+            <td>Position</td>
+            <td>Education</td>
+            <td>Division</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee, status: ${employeeList.content}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.dateOfBirth}"></td>
+            <td th:text="${employee.phoneNumber}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.address}"></td>
+            <td th:text="${employee.position.name}"></td>
+            <td th:text="${employee.education.name}"></td>
+            <td th:text="${employee.division.name}"></td>
+            <td>
+                <button type="button" class="btn btn-outline-success " data-bs-toggle="modal" id="updateEmployee"
+                        data-bs-target="#staticBackdropEdit" th:onclick="'showInfoUpdate('+${employee.id}+')'">
+                    EDIT
+                </button>
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdropDelete" th:onclick="'showInfoDelete('+${employee.id}+')'">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!--     Modal Delete-->
+    <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/employees/delete}" method="post" id="formDelete">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="deleteId" hidden name="IdEmployee">
+                        <span>Are you sure to delete? </span> <span id="deleteName"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                        <button type="submit" class="btn btn-primary">YES</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    Model Delete-->
+    <!--    Modal Edit-->
+    <div class="modal fade" id="staticBackdropEdit" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/api/employees/save}" method="post" id="formEdit">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabelEdit">Employee Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--                        <input type="text" id="editId" hidden name="IdEmployee">-->
+                        <!--                        <span>Edit Employee Information Here </span> <span id="editName"></span>-->
+                        <form accept-charset="utf-8">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>ID</th>
+                                    <td readonly=""><input id="updateId"></td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td><input type="text" id="updateName"></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthday</th>
+                                    <td><input type="date" id="updateBirthDay"></td>
+                                </tr>
+                                <tr>
+                                    <th>ID Card</th>
+                                    <td><input type="text" id="updateIdCard"></td>
+                                </tr>
+                                <tr>
+                                    <th>Salary</th>
+                                    <td><input type="number" id="updateSalary"></td>
+                                </tr>
+                                <tr>
+                                    <th>Phone Number</th>
+                                    <td><input type="text" id="updatePhone"></td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td><input type="text" id="updateEmail"></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td><input type="text" id="updateAddress"></td>
+                                </tr>
+                                <tr>
+                                    <th>Position</th>
+                                    <td><input id="updatePosition"></td>
+                                </tr>
+                                <tr>
+                                    <th>Education</th>
+                                    <td><input id="updateEducation"></td>
+                                </tr>
+                                <tr>
+                                    <th>Division</th>
+                                    <td><input id="updateDivision"></td>
+                                </tr>
+                                <tr>
+                                    <th>User</th>
+                                    <td><input id="updateUser"></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                        <button type="submit" class="btn btn-primary" id="saveUpdateId">SAVE CHANGES</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    Modal Edit-->
+    <!--    Modal Create-->
+    <div class="modal fade" id="staticBackdropCreate" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/api/employees/save}" method="post" id="formCreate">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabelCreate">Employee Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+<!--                        <input type="text" id="createId" hidden name="IdEmployee">-->
+<!--                        <span>Edit Employee Information Here </span> <span id="createName"></span>-->
+                        <form accept-charset="utf-8">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>ID</th>
+                                    <td hidden ><input id="createId"></td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td><input type="text" id="createName"></td>
+                                </tr>
+                                <tr>
+                                    <th>Birthday</th>
+                                    <td><input type="date" id="createBirthDay"></td>
+                                </tr>
+                                <tr>
+                                    <th>ID Card</th>
+                                    <td><input type="text" id="createIdCard"></td>
+                                </tr>
+                                <tr>
+                                    <th>Salary</th>
+                                    <td><input type="number" id="createSalary"></td>
+                                </tr>
+                                <tr>
+                                    <th>Phone Number</th>
+                                    <td><input type="text" id="createPhone"></td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td><input type="text" id="createEmail"></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td><input type="text" id="createAddress"></td>
+                                </tr>
+                                <tr>
+                                    <th>Position</th>
+                                    <td><input id="createPosition"></td>
+                                </tr>
+                                <tr>
+                                    <th>Education</th>
+                                    <td><input id="createEducation"></td>
+                                </tr>
+                                <tr>
+                                    <th>Division</th>
+                                    <td><input id="createDivision"></td>
+                                </tr>
+                                <tr>
+                                    <th>User</th>
+                                    <td><input id="createUser"></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                        <button type="submit" class="btn btn-primary" id="submitCreateId">SUBMIT</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    Modal Create-->
+</div>
+<nav aria-label="..." class="d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" th:href="@{/employees/list(page=${employeeList.number - 1})}"
+               id="aPrevious">Previous</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" id="pageNumber">
+                <span th:text="${employeeList.number + 1}"></span>
+                /
+                <span th:text="${employeeList.totalPages}"></span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:href="@{/employees/list(page=${employeeList.number + 1} )}" id="aNext">Next</a>
+        </li>
+    </ul>
+</nav>
+<!--Table-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function showInfoDelete(id) {
+        console.log(id);
+        document.getElementById("deleteId").value = id;
+    }
+</script>
+<script>
+    function showInfoUpdate(id) {
+        document.getElementById("updateId").value = id;
+        updateEmployee(id);
+    }
+
+    function updateEmployee(employeeId) {
+        console.log(employeeId);
+        $.ajax({
+            url: `http://localhost:8080/api/employees/` + employeeId,
+            type: "GET",
+            dataType: "JSON",
+            success: function (employee) {
+                console.log(employee);
+                document.getElementById("updateId").value = (employee.id);
+                document.getElementById("updateName").value = (employee.name);
+                document.getElementById("updateIdCard").value = (employee.idCard);
+                document.getElementById("updateBirthDay").value = (employee.dateOfBirth);
+                document.getElementById("updateSalary").value = (employee.salary);
+                document.getElementById("updateEmail").value = (employee.email);
+                document.getElementById("updateAddress").value = (employee.address);
+                document.getElementById("updatePhone").value = (employee.phoneNumber);
+                document.getElementById("updateEducation").value = (employee.education.name);
+                document.getElementById("updatePosition").value = (employee.position.name);
+                document.getElementById("updateDivision").value = (employee.division.name);
+                document.getElementById("updateUser").value = (employee.user.userName);
+            }
+        })
+    }
+
+    function saveUpdate() {
+        $(document).ready(function () {
+            let id = $("#updateId").val();
+            let name = $("#updateName").val();
+            let birthday = $("#updateBirthDay").val();
+            let idCard = $("#updateIdCard").val();
+            let salary = $("#updateSalary").val();
+            let phone = $("#updatePhone").val();
+            let email = $("#updateEmail").val();
+            let adress = $("#updateAddress").val();
+            let position = $("#updatePosition").val();
+            let education = $("#updateEducation").val();
+            let division = $("#updateDivision").val();
+            let userName = $("#updateUser").val();
+            console.log(id + " " + name);
+            let updateEmployee = {
+                id: id,
+                name: name,
+                birthday : birthday,
+                idCard : idCard,
+                salary : salary,
+                phone: phone,
+                email : email,
+                address : adress,
+                position : position,
+                education : education,
+                division : division,
+                userName : userName,
+            };
+            $.ajax({
+                url: `http://localhost:8080/api/employees/save`,
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(updateEmployee),
+                success: function () {
+                    alert("OK");
+                }
+            })
+        })
+    }
+
+    function saveCreate(){
+        $(document).ready(function () {
+            let id = $("#createId").val();
+            let name = $("#createName").val();
+            let birthday = $("#createBirthDay").val();
+            let idCard = $("#createIdCard").val();
+            let salary = $("#createSalary").val();
+            let phone = $("#createPhone").val();
+            let email = $("#createEmail").val();
+            let adress = $("#createAddress").val();
+            let position = $("#createPosition").val();
+            let education = $("#createEducation").val();
+            let division = $("#createDivision").val();
+            let userName = $("#createUser").val();
+            console.log(id + " " + name);
+            let createEmployee = {
+                id: id,
+                name: name,
+                birthday : birthday,
+                idCard : idCard,
+                salary : salary,
+                phone: phone,
+                email : email,
+                address : adress,
+                position : position,
+                education : education,
+                division : division,
+                userName : userName,
+            };
+            $.ajax({
+                url: `http://localhost:8080/api/employees/save`,
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(createEmployee),
+                success: function () {
+                    alert("OK");
+                }
+            })
+        })
+    }
+
+    $("#saveUpdateId").click(function () {
+        saveUpdate();
+    })
+    $("#submitCreateId").click(function (){
+        saveCreate();
+    })
+
+</script>
+<footer th:replace="home :: footer"></footer>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>
