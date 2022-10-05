@@ -1,50 +1,35 @@
-package com.model.employee;
+package com.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import com.model.contract.Contract;
+import com.model.employee.Division;
+import com.model.employee.Education;
+import com.model.employee.Position;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "employee")
-public class Employee {
+public class EmployeeDto  implements Validator {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "date_of_birth")
     private String dateOfBirth;
-    @Column(name = "id_card")
     private String idCard;
-    @Column(name = "salary")
     private double salary;
-    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name = "email")
     private String email;
-    @Column(name = "address")
     private String address;
-
-    @ManyToOne
-    @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
-
-    @ManyToOne
-    @JoinColumn(name = "education_degree_id", referencedColumnName = "id")
     private Education education;
-
-    @ManyToOne
-    @JoinColumn(name = "division_id", referencedColumnName = "id")
     private Division division;
-
-    @OneToMany(mappedBy = "employee")
     private Set<Contract> contracts;
 
-    public Employee(int id, String name, String dateOfBirth, String idCard, double salary, String phoneNumber, String email, String address, Position position, Education education, Division division, Set<Contract> contracts) {
+
+    public EmployeeDto() {
+    }
+
+    public EmployeeDto(Integer id, String name, String dateOfBirth, String idCard, double salary, String phoneNumber, String email, String address, Position position, Education education, Division division, Set<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -57,9 +42,6 @@ public class Employee {
         this.education = education;
         this.division = division;
         this.contracts = contracts;
-    }
-
-    public Employee() {
     }
 
     public Integer getId() {
@@ -156,5 +138,15 @@ public class Employee {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }

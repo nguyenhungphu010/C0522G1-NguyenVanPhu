@@ -17,8 +17,10 @@ public class Education {
     @Column(name = "name")
     private String name;
 
+//    @JsonIgnore
+
     @OneToMany(mappedBy = "education")
-    @JsonIgnore
+    @JsonBackReference
     Set<Employee> employeeSet;
 
     public Education() {

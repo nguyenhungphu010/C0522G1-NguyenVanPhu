@@ -16,16 +16,29 @@
     <!--    <div class="container-fluid m-auto text-center p-5">-->
     <!--        <a href="/employees/create" class="btn btn-success">Create new Employee</a>-->
     <!--    </div>-->
-    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
-            data-bs-target="#staticBackdropCreate">
-        Create new Employee
-    </button>
-    <form class="d-flex w-25 float-end" method="get" th:action="@{/api/employees/list}">
-        <input type="hidden" name="action" value="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchParam"
-               id="inputSearch" th:value="${searchParam}">
-        <button class="btn btn-outline-success" type="submit" id="btnSearch">Search</button>
-    </form>
+    <div class="row mt-5">
+        <div class="col-3">
+            <button type="button" class="btn btn-success " data-bs-toggle="modal"
+                    data-bs-target="#staticBackdropCreate">
+                Create new Employee
+            </button>
+        </div>
+        <div class="col-6 text-center">
+            <h1>danh sách nhân viên</h1>
+        </div>
+        <div class="col-3">
+            <form class="d-flex float-end " method="get" th:action="@{/api/employees/list}">
+                <input type="hidden" name="action" value="search">
+                <input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchParam"
+                       id="inputSearch" th:value="${searchParam}">
+                <button class="btn btn-success" type="submit" id="btnSearch">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <br>
     <table class="table table-hover text-center" id="myTable">
         <thead>
         <tr class="table-info">
@@ -54,15 +67,15 @@
             <td th:text="${employee.education.name}"></td>
             <td th:text="${employee.division.name}"></td>
             <td>
-                <button type="button" class="btn btn-outline-success " data-bs-toggle="modal" id="updateEmployee"
+                <button type="button" class="btn btn-success " data-bs-toggle="modal" id="updateEmployee"
                         data-bs-target="#staticBackdropEdit" th:onclick="'showInfoUpdate('+${employee.id}+')'">
-                    EDIT
+                    Edit
                 </button>
             </td>
             <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdropDelete" th:onclick="'showInfoDelete('+${employee.id}+')'">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdropDelete" th:attr="onclick=|showInfoDelete('${employee.id}','${employee.name}')|" >
                     Delete
                 </button>
             </td>
@@ -81,8 +94,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="deleteId" hidden name="IdEmployee">
-                        <span>Are you sure to delete? </span> <span id="deleteName"></span>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><input type="text" id="deleteName" readonly></td>
+                                <td><input type="text" id="deleteId" hidden name="IdEmployee"></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
@@ -93,12 +110,13 @@
         </div>
     </div>
     <!--    Model Delete-->
+
     <!--    Modal Edit-->
     <div class="modal fade" id="staticBackdropEdit" data-bs-backdrop="static"
          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
          aria-hidden="true">
         <div class="modal-dialog">
-            <form th:action="@{/api/employees/save}" method="post" id="formEdit">
+            <form  method="post" id="formEdit">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabelEdit">Employee Information</h5>
@@ -111,7 +129,7 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <th>ID</th>
-                                    <td readonly=""><input id="updateId"></td>
+                                    <td readonly><input id="updateId"></td>
                                 </tr>
                                 <tr>
                                     <th>Name</th>
@@ -143,105 +161,120 @@
                                 </tr>
                                 <tr>
                                     <th>Position</th>
-                                    <td><input id="updatePosition"></td>
+                                    <td><select id="updatePosition" class="form-select">
+                                        <option th:each="pos: ${positionList}"
+                                                th:value="${pos.id}"
+                                                th:text="${pos.name}"></option>
+                                    </select></td>
                                 </tr>
                                 <tr>
                                     <th>Education</th>
-                                    <td><input id="updateEducation"></td>
+                                    <td><select id="updateEducation" class="form-select">
+                                        <option th:each="edu: ${educationList}"
+                                                th:value="${edu.id}"
+                                                th:text="${edu.name}"></option>
+                                    </select></td>
                                 </tr>
                                 <tr>
                                     <th>Division</th>
-                                    <td><input id="updateDivision"></td>
-                                </tr>
-                                <tr>
-                                    <th>User</th>
-                                    <td><input id="updateUser"></td>
+                                    <td><select id="updateDivision" class="form-select">
+                                        <option th:each="divi: ${divisionList}"
+                                                th:value="${divi.id}"
+                                                th:text="${divi.name}"></option>
+                                    </select></td>
                                 </tr>
                             </table>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
-                        <button type="submit" class="btn btn-primary" id="saveUpdateId">SAVE CHANGES</button>
+                        <button type="button" class="btn btn-primary" id="saveUpdateId">SAVE CHANGES</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <!--    Modal Edit-->
+
     <!--    Modal Create-->
     <div class="modal fade" id="staticBackdropCreate" data-bs-backdrop="static"
          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
          aria-hidden="true">
         <div class="modal-dialog">
-            <form th:action="@{/api/employees/save}" method="post" id="formCreate">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabelCreate">Employee Information</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-<!--                        <input type="text" id="createId" hidden name="IdEmployee">-->
-<!--                        <span>Edit Employee Information Here </span> <span id="createName"></span>-->
-                        <form accept-charset="utf-8">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>ID</th>
-                                    <td hidden ><input id="createId"></td>
-                                </tr>
-                                <tr>
-                                    <th>Name</th>
-                                    <td><input type="text" id="createName"></td>
-                                </tr>
-                                <tr>
-                                    <th>Birthday</th>
-                                    <td><input type="date" id="createBirthDay"></td>
-                                </tr>
-                                <tr>
-                                    <th>ID Card</th>
-                                    <td><input type="text" id="createIdCard"></td>
-                                </tr>
-                                <tr>
-                                    <th>Salary</th>
-                                    <td><input type="number" id="createSalary"></td>
-                                </tr>
-                                <tr>
-                                    <th>Phone Number</th>
-                                    <td><input type="text" id="createPhone"></td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td><input type="text" id="createEmail"></td>
-                                </tr>
-                                <tr>
-                                    <th>Address</th>
-                                    <td><input type="text" id="createAddress"></td>
-                                </tr>
-                                <tr>
-                                    <th>Position</th>
-                                    <td><input id="createPosition"></td>
-                                </tr>
-                                <tr>
-                                    <th>Education</th>
-                                    <td><input id="createEducation"></td>
-                                </tr>
-                                <tr>
-                                    <th>Division</th>
-                                    <td><input id="createDivision"></td>
-                                </tr>
-                                <tr>
-                                    <th>User</th>
-                                    <td><input id="createUser"></td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
-                        <button type="submit" class="btn btn-primary" id="submitCreateId">SUBMIT</button>
-                    </div>
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabelCreate">Employee Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </form>
+                <div class="modal-body">
+                    <!--                        <input type="text" id="createId" hidden name="IdEmployee">-->
+                    <!--                        <span>Edit Employee Information Here </span> <span id="createName"></span>-->
+                    <table class="table table-bordered">
+                        <tr>
+                            <th hidden>ID</th>
+                            <td hidden><input id="createId" th:value="null"></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td><input type="text" id="createName"></td>
+                        </tr>
+                        <tr>
+                            <th>Birthday</th>
+                            <td><input type="date" id="createBirthDay"></td>
+                        </tr>
+                        <tr>
+                            <th>ID Card</th>
+                            <td><input type="text" id="createIdCard"></td>
+                        </tr>
+                        <tr>
+                            <th>Salary</th>
+                            <td><input type="number" id="createSalary"></td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td><input type="text" id="createPhone"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><input type="text" id="createEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td><input type="text" id="createAddress"></td>
+                        </tr>
+                        <tr>
+                            <th>Position</th>
+                            <td><select id="createPosition" class="form-select">
+                                <option th:each="pos: ${positionList}"
+                                th:value="${pos.id}"
+                                th:text="${pos.name}"></option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <th>Education</th>
+                            <td><select id="createEducation" class="form-select">
+                                <option th:each="edu: ${educationList}"
+                                        th:value="${edu.id}"
+                                        th:text="${edu.name}"></option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <th>Division</th>
+                            <td><select id="createDivision" class="form-select">
+                                <option th:each="divi: ${divisionList}"
+                                th:value="${divi.id}"
+                                th:text="${divi.name}"></option>
+                            </select></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                    <button type="button" class="btn btn-primary" id="submitCreateId">SUBMIT</button>
+                </div>
+            </div>
+
         </div>
     </div>
     <!--    Modal Create-->
@@ -267,9 +300,11 @@
 <!--Table-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    function showInfoDelete(id) {
+    function showInfoDelete(id,name) {
         console.log(id);
+        console.log(name);
         document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").value = name;
     }
 </script>
 <script>
@@ -294,10 +329,9 @@
                 document.getElementById("updateEmail").value = (employee.email);
                 document.getElementById("updateAddress").value = (employee.address);
                 document.getElementById("updatePhone").value = (employee.phoneNumber);
-                document.getElementById("updateEducation").value = (employee.education.name);
-                document.getElementById("updatePosition").value = (employee.position.name);
-                document.getElementById("updateDivision").value = (employee.division.name);
-                document.getElementById("updateUser").value = (employee.user.userName);
+                document.getElementById("updateEducation").value = (employee.education.id);
+                document.getElementById("updatePosition").value = (employee.position.id);
+                document.getElementById("updateDivision").value = (employee.division.id);
             }
         })
     }
@@ -311,43 +345,42 @@
             let salary = $("#updateSalary").val();
             let phone = $("#updatePhone").val();
             let email = $("#updateEmail").val();
-            let adress = $("#updateAddress").val();
-            let position = $("#updatePosition").val();
-            let education = $("#updateEducation").val();
-            let division = $("#updateDivision").val();
-            let userName = $("#updateUser").val();
+            let address = $("#updateAddress").val();
+            let positionId = $("#updatePosition").val();
+            let educationId = $("#updateEducation").val();
+            let divisionId = $("#updateDivision").val();
             console.log(id + " " + name);
             let updateEmployee = {
-                id: id,
-                name: name,
-                birthday : birthday,
-                idCard : idCard,
-                salary : salary,
-                phone: phone,
-                email : email,
-                address : adress,
-                position : position,
-                education : education,
-                division : division,
-                userName : userName,
+                'id': id,
+                'name': name,
+                'dateOfBirth': birthday,
+                'idCard': idCard,
+                'salary': salary,
+                'phoneNumber': phone,
+                'email': email,
+                'address': address,
+                'position': {'id':positionId},
+                'education': {'id':educationId},
+                'division': {'id':divisionId}
             };
             $.ajax({
-                url: `http://localhost:8080/api/employees/save`,
-                type: "POST",
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json; charset=UTF-8'
                 },
-                contentType: 'application/json; charset=UTF-8',
+                url: `http://localhost:8080/api/employees/saveUpdate`,
+                type: "PUT",
+                // contentType: 'application/json; charset=UTF-8',
                 data: JSON.stringify(updateEmployee),
                 success: function () {
                     alert("OK");
+                    reload();
                 }
             })
         })
     }
 
-    function saveCreate(){
+    function saveCreate() {
         $(document).ready(function () {
             let id = $("#createId").val();
             let name = $("#createName").val();
@@ -356,37 +389,37 @@
             let salary = $("#createSalary").val();
             let phone = $("#createPhone").val();
             let email = $("#createEmail").val();
-            let adress = $("#createAddress").val();
-            let position = $("#createPosition").val();
-            let education = $("#createEducation").val();
-            let division = $("#createDivision").val();
-            let userName = $("#createUser").val();
-            console.log(id + " " + name);
+            let address = $("#createAddress").val();
+            let positionId = $("#createPosition").val();
+            let educationId = $("#createEducation").val();
+            let divisionId = $("#createDivision").val();
             let createEmployee = {
-                id: id,
-                name: name,
-                birthday : birthday,
-                idCard : idCard,
-                salary : salary,
-                phone: phone,
-                email : email,
-                address : adress,
-                position : position,
-                education : education,
-                division : division,
-                userName : userName,
+                'id': id,
+                'name': name,
+                'dateOfBirth': birthday,
+                'idCard': idCard,
+                'salary': salary,
+                'phoneNumber': phone,
+                'email': email,
+                'address': address,
+                'position': {'id':positionId},
+                'education': {'id':educationId},
+                'division': {'id':divisionId}
             };
+            console.log(createEmployee);
             $.ajax({
                 url: `http://localhost:8080/api/employees/save`,
                 type: "POST",
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json; charset=UTF-8'
                 },
-                contentType: 'application/json; charset=UTF-8',
+                // contentType: 'application/json; charset=UTF-8',
                 data: JSON.stringify(createEmployee),
                 success: function () {
                     alert("OK");
+                    $("#staticBackdropCreate").modal('hide');
+                    reload();
                 }
             })
         })
@@ -395,9 +428,12 @@
     $("#saveUpdateId").click(function () {
         saveUpdate();
     })
-    $("#submitCreateId").click(function (){
+    $("#submitCreateId").click(function () {
         saveCreate();
     })
+    function reload(){
+        location.reload();
+    }
 
 </script>
 <footer th:replace="home :: footer"></footer>

@@ -16,6 +16,8 @@ public class Position {
     @Column(name = "name")
     private String name;
 
+//    @JsonIgnore
+
     @OneToMany(mappedBy = "position")
     @JsonBackReference
     Set<Employee> employeeSet;

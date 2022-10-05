@@ -17,8 +17,9 @@ public class Division {
     @Column(name = "name")
     private String name;
 
+//    @JsonIgnore
     @OneToMany(mappedBy = "division")
-    @JsonIgnore
+    @JsonBackReference
     Set<Employee> employeeSet;
 
     public Division(int id, String name, Set<Employee> employeeSet) {
