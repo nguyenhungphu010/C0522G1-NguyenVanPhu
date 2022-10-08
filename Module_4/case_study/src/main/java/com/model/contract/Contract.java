@@ -1,6 +1,5 @@
 package com.model.contract;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.model.customer.Customer;
 import com.model.employee.Employee;
 import com.model.facility.Facility;
@@ -23,7 +22,7 @@ public class Contract {
     @Column(name = "deposit")
     private double deposit;
     @Column(name = "status" )
-    private Boolean status = false;
+    private boolean status = false;
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
@@ -91,11 +90,11 @@ public class Contract {
         this.deposit = deposit;
     }
 
-    public Boolean getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

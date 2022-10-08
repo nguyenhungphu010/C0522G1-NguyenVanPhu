@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Contract</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
 <nav th:replace="~{home::navbar1}"></nav>
 <nav th:replace="~{home :: navbar2}"></nav>
 
 <div class="container-fluid align-content-center" id="content">
-    <div class="container-fluid m-auto text-center p-5">
-        <a href="/facilities/create" class="btn btn-success">Create new Contract</a>
+    <div class="row mt-5 mb-5">
+        <div class="col-3">
+            <div class="container-fluid m-auto ">
+                <a href="/contracts/create" class="btn btn-success">Create new Contract</a>
+            </div>
+        </div>
+        <div class="col-6 text-center">
+            <h2>Contract List</h2>
+        </div>
+        <div class="col-3">
+            <form class="d-flex w-100 " method="get" th:action="@{/contracts/list}">
+                <input type="hidden" name="action" value="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                       name="searchParam" id="inputSearch">
+                <button class="btn btn-outline-success" type="submit" id="btnSearch">Search</button>
+            </form>
+        </div>
     </div>
-    <form class="d-flex w-25 float-end" method="get" th:action="@{/facilities/list}">
-        <input type="hidden" name="action" value="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchParam"  id="inputSearch" >
-        <button class="btn btn-outline-success" type="submit" id="btnSearch">Search</button>
-    </form>
+
+
     <table class="table table-hover text-center" id="myTable">
         <thead>
         <tr class="table-info">
@@ -42,32 +54,38 @@
             <td th:text="${contract.customer.name}"></td>
             <td th:text="${contract.facility.name}"></td>
             <td th:text="${#numbers.formatCurrency(contract.totalMoney)}"></td>
-            <td><a class="btn btn-outline-warning" th:href="@{/contracts/list(id=${contract.id})}">
-                +
-            </a></td>
+            <td>
+                <!--                <a class="btn btn-outline-warning" th:href="@{/contracts/list(id=${contract.id})}">-->
+                <!--                    +-->
+                <!--                </a>-->
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdropContractDetail" th:onclick="'showInfoContractId('+${contract.id}+')'">
+                    +
+                </button>
+            </td>
             <td>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdropDelete"   th:onclick="'showInfo('+${contract.id}+')'">
+                        data-bs-target="#staticBackdropDelete" th:onclick="'showInfo('+${contract.id}+')'">
                     List of attach service
                 </button>
             </td>
         </tr>
         </tbody>
     </table>
-    <!-- Modal -->
+    <!-- Modal Attach Facility  -->
     <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
          aria-hidden="true">
         <div class="modal-dialog">
-            <form method="post" id="formDelete" >
+            <form method="post" id="formDelete">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">Attach service</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <table class="table-bordered table" >
+                        <table class="table-bordered table">
                             <thead class="btn-success text-center text-light">
                             <tr>
                                 <td>No</td>
@@ -83,7 +101,48 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<!--                        <button type="submit" class="btn btn-primary">YES</button>-->
+                        <!--                        <button type="submit" class="btn btn-primary">YES</button>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Modal add new Contract Detail-->
+    <div class="modal fade" id="staticBackdropContractDetail" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelContractDetail"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form  method="POST" action="/contracts/saveDetailContract"  th:object="${contractDetail}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabelContractDetail">Attach Service</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <table class="table-bordered table">
+                                <tr>
+                                    <td>Contract ID</td>
+                                    <td><input th:field="*{contract}" id="contractId" name="contractId" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Service</td>
+                                    <td>
+                                        <select th:field="*{attachContractId}" class="form-select">
+                                            <option th:each="attach : ${attachContractList}"
+                                            th:value="${attach.id}"
+                                            th:text="${attach.name}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Quantity</td>
+                                    <td><input th:field="*{quantity}" type="number"></td>
+                                </tr>
+                            </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </form>
@@ -95,7 +154,8 @@
 <nav aria-label="..." class="d-flex justify-content-center">
     <ul class="pagination">
         <li class="page-item">
-            <a class="page-link" th:href="@{/contracts/list(page=${contractList.number - 1})}" id="aPrevious">Previous</a>
+            <a class="page-link" th:href="@{/contracts/list(page=${contractList.number - 1})}"
+               id="aPrevious">Previous</a>
         </li>
         <li class="page-item disabled">
             <a class="page-link" id="pageNumber">
@@ -113,30 +173,36 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-   function showInfo(id){
-       $.ajax({
-           type: "GET",
-           url: "http://localhost:8080/restContracts/list/" + id,
-           success: function (contractDetails) {
-               console.log(contractDetails)
-               let htmlStr = '';
+    function showInfoContractId(id){
+        document.getElementById("contractId").value = id;
+    }
+</script>
+<script>
 
-               for (let i = 0; i < contractDetails.length; i++) {
-                   htmlStr += `<tr>
+    function showInfo(id) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/restContracts/list/" + id,
+            success: function (contractDetails) {
+                console.log(contractDetails)
+                let htmlStr = '';
+
+                for (let i = 0; i < contractDetails.length; i++) {
+                    htmlStr += `<tr>
                         <td>${i + 1}</td>
                         <td>${contractDetails[i].name}</td>
                         <td>${contractDetails[i].cost}</td>
                         <td>${contractDetails[i].unit}</td>
                         <td>${contractDetails[i].statusAttach}</td>
                     </tr>`;
-               }
-               $("#showAttachFacilityId").html(htmlStr);
-           },
-           error: function (resultError) {
-           }
-       });
-       document.getElementById("deleteId").value = id;
-   }
+                }
+                $("#showAttachFacilityId").html(htmlStr);
+            },
+            error: function (resultError) {
+            }
+        });
+        document.getElementById("deleteId").value = id;
+    }
 </script>
 <footer th:replace="home :: footer"></footer>
 <script src="/js/bootstrap.js"></script>

@@ -5,20 +5,30 @@ import com.model.contract.Contract;
 import com.model.employee.Division;
 import com.model.employee.Education;
 import com.model.employee.Position;
+import com.util.FacilityValidation;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
-public class EmployeeDto  implements Validator {
+public class EmployeeDto implements Validator {
 
     private Integer id;
+    @NotBlank(message = "please input the name !")
     private String name;
     private String dateOfBirth;
+    @NotBlank(message = "please input the name !")
     private String idCard;
     private double salary;
+    @Pattern(regexp = "^((090)|(091)|(\\(84\\)+90)|(\\(84\\)+91))[0-9]{7}$",
+            message = "Please input the correct phone number !")
     private String phoneNumber;
+    @Email(message = "please input the correct format: abc@gmail.com !")
     private String email;
+    @NotBlank(message = "please input the address !")
     private String address;
     private Position position;
     private Education education;
@@ -147,6 +157,20 @@ public class EmployeeDto  implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        EmployeeDto employeeDto = (EmployeeDto) target;
+         String name = employeeDto.getName();
+         if (!name.matches("^[A-Z][A-Za-z]*(\\s[A-Z][A-Za-z]*){0,20}$")){
+             errors.rejectValue("name", "name","first letter must be capital");
+         }
+        String idCard = employeeDto.getIdCard();
+        if (!idCard.matches("^[0-9]{9}|[0-9]{12}$")){
+            errors.rejectValue("idCard", "idCard","ID Card must follow the correct pattern");
+        }
+        String dateOfBirth = employeeDto.getDateOfBirth();
+        FacilityValidation.checkStartDate("dateOfBirth",dateOfBirth,errors);
+
+        double salary = employeeDto.getSalary();
+        FacilityValidation.checkDouble("salary", salary, errors);
 
     }
 }

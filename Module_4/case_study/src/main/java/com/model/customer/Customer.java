@@ -1,8 +1,6 @@
 package com.model.customer;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.model.contract.Contract;
-import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -30,7 +28,7 @@ public class Customer {
     @Column(name = "address")
     private String address;
     @Column(name = "is_deleted")
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
@@ -122,7 +120,7 @@ public class Customer {
         this.address = address;
     }
 
-    public Boolean getDeleted() {
+    public Boolean isDeleted() {
         return isDeleted;
     }
 

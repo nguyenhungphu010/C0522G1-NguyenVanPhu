@@ -13,9 +13,6 @@
 
 <!--Table-->
 <div class="container-fluid align-content-center" id="content">
-    <!--    <div class="container-fluid m-auto text-center p-5">-->
-    <!--        <a href="/employees/create" class="btn btn-success">Create new Employee</a>-->
-    <!--    </div>-->
     <div class="row mt-5">
         <div class="col-3">
             <button type="button" class="btn btn-success " data-bs-toggle="modal"
@@ -24,10 +21,10 @@
             </button>
         </div>
         <div class="col-6 text-center">
-            <h1>danh sách nhân viên</h1>
+            <h2>Employee List</h2>
         </div>
         <div class="col-3">
-            <form class="d-flex float-end " method="get" th:action="@{/api/employees/list}">
+            <form class="d-flex float-end " method="get" th:action="@{/employees/list}">
                 <input type="hidden" name="action" value="search">
                 <input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchParam"
                        id="inputSearch" th:value="${searchParam}">
@@ -35,8 +32,6 @@
             </form>
         </div>
     </div>
-
-
 
     <br>
     <table class="table table-hover text-center" id="myTable">

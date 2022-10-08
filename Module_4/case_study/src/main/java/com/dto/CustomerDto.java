@@ -1,5 +1,6 @@
 package com.dto;
 
+import com.util.FacilityValidation;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Pattern;
 
 public class CustomerDto implements Validator {
 
+    private static  String regax ="([\\p{Lu}][\\p{Ll}0-9]{1,8})(\\s([\\p{Lu}0-9]|[\\p{Lu}0-9][\\p{Ll}0-9]{1,10})){0,5}$";
 
     private Integer id;
     @NotBlank(message = "please input the name")
@@ -18,8 +20,8 @@ public class CustomerDto implements Validator {
     private int gender;
     private String idCard;
     @NotBlank(message = "please input !")
-    @Pattern(regexp = "^((090)|(091)|(\\\\(84\\\\)+90)|(\\\\(84\\\\)+91))[0-9]{7}$",
-            message = "Nhập số điện thoại Việt Nam")
+    @Pattern(regexp = "^((090)|(091)|(\\(84\\)+90)|(\\(84\\)+91))[0-9]{7}$",
+            message = "Please input the correct phone number")
     private String phoneNumber;
     @NotBlank(message = "please input !")
     @Email(message = "please input the correct format: abc@gmail.com")
@@ -143,5 +145,8 @@ public class CustomerDto implements Validator {
         if (!idCard.matches("^[0-9]{9}|[0-9]{12}$")){
             errors.rejectValue("idCard", "idCard.create","ID Card must follow the correct pattern");
         }
+
+        String birthDay = customerDto.getDateOfBirth();
+        FacilityValidation.checkStartDate("dateOfBirth",dateOfBirth,errors);
     }
 }
