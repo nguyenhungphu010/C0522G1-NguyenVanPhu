@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Phone List</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+</head>
+<body>
+<nav th:replace="~{home :: navbar2}"></nav>
+
+<!--Table-->
+<div class="container-fluid align-content-center" id="content">
+    <div class="row mt-5">
+        <div class="col-3" >
+            <div class="container-fluid m-auto">
+                <a href="/products/create" class="btn btn-info">Create new Product</a>
+            </div>
+        </div>
+        <div class="col-6 text-center">
+            <h2>Product List</h2>
+        </div>
+        <div class="col-3">
+            <form class="d-flex float-end " method="get" th:action="@{/phones/list}">
+                <input type="hidden" name="action" value="search">
+                <input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchParam"
+                       id="inputSearch" th:value="${searchParam}">
+                <button class="btn btn-info" type="submit" id="btnSearch">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <table class="table table-hover text-center" id="myTable">
+        <thead>
+        <tr class="table-info">
+            <td>No.</td>
+            <td>Select</td>
+            <td>Product Name</td>
+            <td>Maker</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="phone, status: ${phoneList.content}">
+            <td th:text="${status.count}"></td>
+            <td><input type="checkbox"  th:attr="onclick=|checkDeleteInfo('${phone.id}')|" ></td>
+            <td th:text="${phone.name}"></td>
+            <td th:text="${phone.maker}"></td>
+<!--            <td><a class="btn btn-outline-warning" th:href="@{/phone/showEdit(id=${phone.id})}">-->
+<!--                edit-->
+<!--            </a></td>-->
+<!--            <td>-->
+<!--                &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--                <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+<!--                        data-bs-target="#staticBackdropDelete" th:attr="onclick=|showInfoDelete('${product.id}','${product.name}')|" >-->
+<!--                    Delete-->
+<!--                </button>-->
+<!--            </td>-->
+        </tr>
+        </tbody>
+    </table>
+    <!--     Modal Delete-->
+    <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/products/delete}" method="post" id="formDelete">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><input type="text" id="deleteName" readonly></td>
+                                <td><input type="text" id="deleteId" hidden name="idProduct"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+                        <button type="submit" class="btn btn-primary">YES</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--    Model Delete-->
+    <form th:action="@{/phones/delete}" method="post" >
+        <input id="idsPhones" name="IdsPhone">
+        <button type="submit"  class="button btn-success" >Delete</button>
+    </form>
+
+</div>
+<nav aria-label="..." class="d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" th:href="@{/phones/list(page=${phoneList.number - 1})}"
+               id="aPrevious">Previous</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" id="pageNumber">
+                <span th:text="${phoneList.number + 1}"></span>
+                /
+                <span th:text="${phoneList.totalPages}"></span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:href="@{/phones/list(page=${phoneList.number + 1} )}" id="aNext">Next</a>
+        </li>
+    </ul>
+</nav>
+<!--Table-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function showInfoDelete(id,name) {
+        console.log(id);
+        console.log(name);
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").value = name;
+    }
+</script>
+<script>
+    let StrIds = "";
+    function checkDeleteInfo(id){
+        StrIds += id;
+        console.log(StrIds);
+        document.getElementById("idsPhones").value = StrIds;
+    }
+</script>
+<!--<footer th:replace="home :: footer"></footer>-->
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../../cssMDB/mdb.min.css">
+</head>
+<body>
+
+<!-- Include _menu.html -->
+<th:block th:include="/login/_menu.html"></th:block>
+
+<h2>Message : <span th:utext="${message}"></span></h2>
+
+</body>
+</html>
