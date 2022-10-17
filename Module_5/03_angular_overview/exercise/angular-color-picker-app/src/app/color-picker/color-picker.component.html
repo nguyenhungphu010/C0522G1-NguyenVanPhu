@@ -1,0 +1,9 @@
+<p>color-picker works!</p>
+<h2>Text color editor</h2>
+<div>
+  <label> Enter the color: </label>
+  <input type="color" [(ngModel)]="textColor">
+</div>
+<p [style.background-color]="textColor">
+  this is the paragraph
+</p>
