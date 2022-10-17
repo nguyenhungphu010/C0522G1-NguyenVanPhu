@@ -1,0 +1,23 @@
+<p>calculator works!</p>
+<div>
+  <label for="number1"> Number 1</label>
+  <input id="number1" type="text" [value]="number1" [(ngModel)]="number1">
+  <label for="number2"> Number 2</label>
+  <input id="number2" type="text" [value]="number2" [(ngModel)]="number2">
+</div>
+<div>
+  <br>
+  <button type="button" (click)="sum2Num()" > Plus </button>
+  <button type="button" (click)="minus2Num()" > Minus </button>
+  <button type="button" (click)="times2Num()" > Times </button>
+  <button type="button" (click)="divide2Num()" > Divided </button>
+</div>
+
+<div>
+  <h2>{{resultSum}}</h2>
+  <h2>{{resultMinus}}</h2>
+  <h2>{{resultTimes}}</h2>
+  <h2>{{resultDivide}}</h2>
+</div>
+
+
