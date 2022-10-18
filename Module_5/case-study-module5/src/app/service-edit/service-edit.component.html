@@ -1,0 +1,163 @@
+<div class="container" id="content">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt=""
+           width="72" height="120">
+      <h2>Furama Service Management</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Service Information to edit </h4>
+        <form class="needs-validation" method="post" th:action="@{/facilities/saveEdit}"
+              th:object="${facilityDto}">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="service_type" class="form-label">Service Selection<span
+                class="text-muted"></span></label>
+              <select id="service_type" class="form-select"
+                      onchange="showVillaFacility()" th:field="*{facilityType}" required>
+                <option value="">Select the Service</option>
+                <option th:each="type:${facilityTypeList}"
+                        th:text="${type.name}"
+                        th:value="${type.id}"></option>
+              </select>
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="service_id" class="form-label">Service ID</label>
+              <input type="text" readonly class="form-control" name="idFacility" id="service_id"
+                     placeholder="" th:field="*{id}" required>
+              <!--                            <div class="mb-4 text-danger" th:errors="*{name}"></div>-->
+            </div>
+            <div class="col-12">
+              <label for="service_name" class="form-label">Service Name</label>
+              <input type="text" class="form-control" name="name" id="service_name"
+                     th:field="*{name}" required>
+              <div class="mb-4 text-danger" th:errors="*{name}"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="area" class="form-label">Area<span class="text-muted"></span></label>
+              <input type="number" class="form-control" name="area" id="area" th:field="*{area}">
+              <div class="mb-4 text-danger" th:errors="*{area}"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="cost" class="form-label">Cost<span class="text-muted"></span></label>
+              <input type="number" class="form-control" name="cost" id="cost" th:field="*{cost}">
+              <div class="mb-4 text-danger" th:errors="*{cost}"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="max_people" class="form-label">Max People <span
+                class="text-muted"></span></label>
+              <input type="number" class="form-control" name="maxPeople" id="max_people"
+                     th:field="*{maxPeople}">
+              <div class="mb-4 text-danger" th:errors="*{maxPeople}"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="rent_type" class="form-label">Rent Type<span class="text-muted"></span></label>
+              <select name="rentType" id="rent_type" class="form-select" th:field="*{rentType}">
+                <option value="">Select Rent Type</option>
+                <option th:each="rentype :${rentTypeList}"
+                        th:text="${rentype.name}"
+                        th:value="${rentype.id}"></option>
+              </select>
+            </div>
+            <div id="house" style="display:none;">
+
+              <div class="col-12">
+                <label for="standard_room" class="form-label">Standard Room</label>
+                <input type="text" class="form-control" name="standardRoom" id="standard_room"
+                       th:field="*{standardRoom}" required>
+                <div class="mb-4 text-danger" th:errors="*{standardRoom}"></div>
+              </div>
+
+              <div class="col-12">
+                <label for="convenience" class="form-label">Convenience</label>
+                <input type="text" class="form-control" name="descriptionConvenience" id="convenience"
+                       th:field="*{desConvenience}" required>
+                <div class="mb-4 text-danger" th:errors="*{name}"></div>
+              </div>
+
+              <div class="col-12">
+                <label for="floor" class="form-label">Number of Floor</label>
+                <input type="number" class="form-control" name="floorNumb" id="floor"
+                       th:field="*{floors}" required>
+                <div class="mb-4 text-danger" th:errors="*{floors}"></div>
+              </div>
+
+              <div class="col-12" id="villa" style="display: none">
+                <label for="pool" class="form-label">Pool Area</label>
+                <input type="number" class="form-control" name="poolArea" id="pool"
+                       th:field="*{poolArea}" required>
+                <div class="mb-4 text-danger" th:errors="*{poolArea}"></div>
+              </div>
+            </div>
+            <div class="col-12" id="room" style="display: none">
+              <label for="free_facility" class="form-label">Free Facility</label>
+              <input type="text" class="form-control" name="freeFacility" id="free_facility"
+                     th:field="*{facilityFree}">
+              <div class="mb-4 text-danger" th:errors="*{facilityFree}"></div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  window.onload = function () {
+    let serviceTypeId = document.getElementById("service_type").value;
+    displayType(serviceTypeId)
+  };
+
+  function displayType(value) {
+    console.log(value);
+    if (value === '1') {
+      document.getElementById('villa').style.display = 'block';
+      document.getElementById('house').style.display = 'block';
+      document.getElementById('room').style.display = 'none';
+    } else if (value === '2') {
+      document.getElementById('villa').style.display = 'none';
+      document.getElementById('house').style.display = 'block';
+      document.getElementById('room').style.display = 'none';
+    } else if (value === '3') {
+      console.log("Hello")
+      document.getElementById('house').style.display = 'none';
+      document.getElementById('villa').style.display = 'none';
+      document.getElementById('room').style.display = 'block';
+    } else {
+      document.getElementById('house').style.display = 'none';
+      document.getElementById('villa').style.display = 'none';
+      document.getElementById('room').style.display = 'none';
+    }
+  }
+
+  function showVillaFacility() {
+    let value = document.getElementById('service_type').value;
+    console.log(value);
+    if (value === '1') {
+      document.getElementById('villa').style.display = 'block';
+      document.getElementById('house').style.display = 'block';
+      document.getElementById('room').style.display = 'none';
+    } else if (value === '2') {
+      document.getElementById('villa').style.display = 'none';
+      document.getElementById('house').style.display = 'block';
+      document.getElementById('room').style.display = 'none';
+    } else if (value === '3') {
+      document.getElementById('house').style.display = 'none';
+      document.getElementById('villa').style.display = 'none';
+      document.getElementById('room').style.display = 'block';
+    } else {
+      document.getElementById('house').style.display = 'none';
+      document.getElementById('villa').style.display = 'none';
+      document.getElementById('room').style.display = 'none';
+    }
+  }
+</script>
