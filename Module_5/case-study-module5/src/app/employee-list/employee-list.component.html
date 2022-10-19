@@ -1,0 +1,280 @@
+<div class="container-fluid align-content-center" id="content">
+  <div class="row mt-5">
+    <div class="col-3" th:if="${userInfo.contains('DIRECTOR') || userInfo.contains('MANAGER') }">
+      <button type="button" class="btn btn-success " data-bs-toggle="modal"
+              data-bs-target="#staticBackdropCreate">
+        Create new Employee
+      </button>
+    </div>
+    <div class="col-6 text-center">
+      <h2>Employee List</h2>
+    </div>
+    <div class="col-3">
+      <form class="d-flex float-end " method="get" th:action="@{/employees/list}">
+        <input type="hidden" name="action" value="search">
+        <input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchParam"
+               id="inputSearch" th:value="${searchParam}">
+        <button class="btn btn-success" type="submit" id="btnSearch">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <br>
+  <table class="table table-hover text-center" id="myTable">
+    <thead>
+    <tr class="table-info">
+      <td>No.</td>
+      <td>Name</td>
+      <td>Day of Birth</td>
+      <td>Phone Number</td>
+      <td>Email</td>
+      <td>Address</td>
+      <td>Position</td>
+      <td>Education</td>
+      <td>Division</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee, status: ${employeeList.content}">
+      <td th:text="${status.count}"></td>
+      <td th:text="${employee.name}"></td>
+      <td th:text="${employee.dateOfBirth}"></td>
+      <td th:text="${employee.phoneNumber}"></td>
+      <td th:text="${employee.email}"></td>
+      <td th:text="${employee.address}"></td>
+      <td th:text="${employee.position.name}"></td>
+      <td th:text="${employee.education.name}"></td>
+      <td th:text="${employee.division.name}"></td>
+      <td th:if="${userInfo.contains('DIRECTOR') || userInfo.contains('MANAGER')}">
+        <button type="button" class="btn btn-success " data-bs-toggle="modal" id="updateEmployee"
+                data-bs-target="#staticBackdropEdit" th:onclick="'showInfoUpdate('+${employee.id}+')'">
+          Edit
+        </button>
+      </td>
+      <td>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                data-bs-target="#staticBackdropDelete" th:attr="onclick=|showInfoDelete('${employee.id}','${employee.name}')|" >
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <!--     Modal Delete-->
+  <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+       data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <form th:action="@{/employees/delete}" method="post" id="formDelete">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-borderless">
+              <tr>
+                <td><input type="text" id="deleteName" readonly></td>
+                <td><input type="text" id="deleteId" hidden name="IdEmployee"></td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+            <button type="submit" class="btn btn-primary">YES</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--    Model Delete-->
+
+  <!--    Modal Edit-->
+  <div class="modal fade" id="staticBackdropEdit" data-bs-backdrop="static"
+       data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <form  method="post" id="formEdit">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabelEdit">Employee Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!--                        <input type="text" id="editId" hidden name="IdEmployee">-->
+            <!--                        <span>Edit Employee Information Here </span> <span id="editName"></span>-->
+            <form accept-charset="utf-8">
+              <table class="table table-bordered">
+                <tr>
+                  <th>ID</th>
+                  <td readonly><input id="updateId"></td>
+                </tr>
+                <tr>
+                  <th>Name</th>
+                  <td><input type="text" id="updateName"></td>
+                </tr>
+                <tr>
+                  <th>Birthday</th>
+                  <td><input type="date" id="updateBirthDay"></td>
+                </tr>
+                <tr>
+                  <th>ID Card</th>
+                  <td><input type="text" id="updateIdCard"></td>
+                </tr>
+                <tr>
+                  <th>Salary</th>
+                  <td><input type="number" id="updateSalary"></td>
+                </tr>
+                <tr>
+                  <th>Phone Number</th>
+                  <td><input type="text" id="updatePhone"></td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td><input type="text" id="updateEmail"></td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td><input type="text" id="updateAddress"></td>
+                </tr>
+                <tr>
+                  <th>Position</th>
+                  <td><select id="updatePosition" class="form-select">
+                    <option th:each="pos: ${positionList}"
+                            th:value="${pos.id}"
+                            th:text="${pos.name}"></option>
+                  </select></td>
+                </tr>
+                <tr>
+                  <th>Education</th>
+                  <td><select id="updateEducation" class="form-select">
+                    <option th:each="edu: ${educationList}"
+                            th:value="${edu.id}"
+                            th:text="${edu.name}"></option>
+                  </select></td>
+                </tr>
+                <tr>
+                  <th>Division</th>
+                  <td><select id="updateDivision" class="form-select">
+                    <option th:each="divi: ${divisionList}"
+                            th:value="${divi.id}"
+                            th:text="${divi.name}"></option>
+                  </select></td>
+                </tr>
+              </table>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+            <button type="button" class="btn btn-primary" id="saveUpdateId">SAVE CHANGES</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--    Modal Edit-->
+
+  <!--    Modal Create-->
+  <div class="modal fade" id="staticBackdropCreate" data-bs-backdrop="static"
+       data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabelCreate">Employee Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!--                        <input type="text" id="createId" hidden name="IdEmployee">-->
+          <!--                        <span>Edit Employee Information Here </span> <span id="createName"></span>-->
+          <table class="table table-bordered">
+            <tr>
+              <th hidden>ID</th>
+              <td hidden><input id="createId" th:value="null"></td>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <td><input type="text" id="createName"></td>
+            </tr>
+            <tr>
+              <th>Birthday</th>
+              <td><input type="date" id="createBirthDay"></td>
+            </tr>
+            <tr>
+              <th>ID Card</th>
+              <td><input type="text" id="createIdCard"></td>
+            </tr>
+            <tr>
+              <th>Salary</th>
+              <td><input type="number" id="createSalary"></td>
+            </tr>
+            <tr>
+              <th>Phone Number</th>
+              <td><input type="text" id="createPhone"></td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td><input type="text" id="createEmail"></td>
+            </tr>
+            <tr>
+              <th>Address</th>
+              <td><input type="text" id="createAddress"></td>
+            </tr>
+            <tr>
+              <th>Position</th>
+              <td><select id="createPosition" class="form-select">
+                <option th:each="pos: ${positionList}"
+                        th:value="${pos.id}"
+                        th:text="${pos.name}"></option>
+              </select></td>
+            </tr>
+            <tr>
+              <th>Education</th>
+              <td><select id="createEducation" class="form-select">
+                <option th:each="edu: ${educationList}"
+                        th:value="${edu.id}"
+                        th:text="${edu.name}"></option>
+              </select></td>
+            </tr>
+            <tr>
+              <th>Division</th>
+              <td><select id="createDivision" class="form-select">
+                <option th:each="divi: ${divisionList}"
+                        th:value="${divi.id}"
+                        th:text="${divi.name}"></option>
+              </select></td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+          <button type="button" class="btn btn-primary" id="submitCreateId">SUBMIT</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--    Modal Create-->
+</div>
+<nav aria-label="..." class="d-flex justify-content-center">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" th:href="@{/employees/list(page=${employeeList.number - 1})}"
+         id="aPrevious">Previous</a>
+    </li>
+    <li class="page-item disabled">
+      <a class="page-link" id="pageNumber">
+        <span th:text="${employeeList.number + 1}"></span>
+        /
+        <span th:text="${employeeList.totalPages}"></span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" th:href="@{/employees/list(page=${employeeList.number + 1} )}" id="aNext">Next</a>
+    </li>
+  </ul>
+</nav>

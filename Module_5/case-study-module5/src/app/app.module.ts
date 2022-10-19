@@ -9,6 +9,9 @@ import { FooterComponent } from './footer/footer.component';
 import { ServiceComponent } from './service/service.component';
 import { ServiceEditComponent } from './service-edit/service-edit.component';
 import { ServiceAddComponent } from './service-add/service-add.component';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
+import { EmployeeAddComponent } from './employee-add/employee-add.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { ServiceAddComponent } from './service-add/service-add.component';
     FooterComponent,
     ServiceComponent,
     ServiceEditComponent,
-    ServiceAddComponent
+    ServiceAddComponent,
+    EmployeeListComponent,
+    EmployeeEditComponent,
+    EmployeeAddComponent
   ],
   imports: [
     BrowserModule,
