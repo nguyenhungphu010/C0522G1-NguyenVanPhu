@@ -1,0 +1,83 @@
+<div class="container" id="content">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt="" width="72" height="120">
+      <h2>Furama Contract Management</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Contract New Information </h4>
+        <form method="post" action="/contracts/save" th:object="${contractObj}">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="startDate" class="form-label">Start Date</label>
+              <input type="date" class="form-control" id="startDate" name="name" th:field="*{startDate}">
+              <!--                            <div class="mb-4 text-danger" th:errors="*{name}"></div>-->
+            </div>
+
+            <div class="col-12">
+              <label for="endDate" class="form-label">End Date<span class="text-muted"></span></label>
+              <input type="date" class="form-control" id="endDate" name="birthDay"  th:field="*{endDate}">
+              <!--                            <div class="mb-4 text-danger" th:errors="*{dateOfBirth}"></div>-->
+            </div>
+
+            <!--                        <div class="col-12">-->
+            <!--                            <label  class="form-label">Gender <span class="text-muted"></span></label>-->
+            <!--                            <select class="form-select" type="text"  th:field="*{gender}">-->
+            <!--                                <option th:value="0" th:text="Female"></option>-->
+            <!--                                <option th:value="1" th:text="Male"></option>-->
+            <!--                            </select>-->
+
+            <!--                            <div class="invalid-feedback">-->
+            <!--                                Please enter a valid email address for shipping updates.-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+
+            <div class="col-12">
+              <label for="deposit" class="form-label">Deposit<span class="text-muted"></span></label>
+              <input type="number" class="form-control" id="deposit" name="deposit"  th:field="*{deposit}">
+              <!--                            <div class="mb-4 text-danger" th:errors="*{idCard}"></div>-->
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Employee</label>
+              <select class="form-select" type="text"  th:field="*{employee}">
+                <option th:each="em : ${employeeList}"
+                        th:value="${em.id}"
+                        th:text="${em.name}"></option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose the Employee
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Customer</label>
+              <select class="form-select" type="text"  th:field="*{customer}">
+                <option th:each="cus : ${customerList}"
+                        th:value="${cus.id}"
+                        th:text="${cus.name}"></option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose the Customer
+              </div>
+            </div>
+            <div class="col-12">
+              <label  class="form-label">Facility</label>
+              <select class="form-select" type="text"  th:field="*{facility}">
+                <option th:each="fac : ${facilityList}"
+                        th:value="${fac.id}"
+                        th:text="${fac.name}"></option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose the Facility
+              </div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">UPDATE</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
