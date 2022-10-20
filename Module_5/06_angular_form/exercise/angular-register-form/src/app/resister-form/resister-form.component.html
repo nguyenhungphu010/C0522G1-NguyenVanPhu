@@ -1,0 +1,135 @@
+<div class="container">
+  <form [formGroup]="userForm" (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+             formControlName="email" name="email">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <div class="alert alert-danger" *ngIf="userForm.controls.email.hasError('email') && userForm.controls.email.touched">Email invalid</div>
+    </div>
+    <div formGroupName="pass">
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password"
+               name="password">
+      </div>
+      <div class="alert alert-danger"
+           *ngIf="userForm.controls.pass.get('password').hasError('minlength') && userForm.controls.pass.get('password').touched">
+        Password invalid (min length 6)
+      </div>
+      <div class="alert alert-danger"
+           *ngIf="userForm.controls.pass.get('password').hasError('required') && userForm.controls.pass.get('password').touched">
+        Password is not empty
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+               name="confirmPassword">
+      </div>
+      <div class="alert alert-danger"
+           *ngIf="userForm.controls.pass.get('confirmPassword').hasError('minlength') && userForm.controls.pass.get('confirmPassword').touched">
+        Password invalid (min length 6)
+      </div>
+      <div class="alert alert-danger"
+           *ngIf="userForm.controls.pass.get('confirmPassword').hasError('required') && userForm.controls.pass.get('confirmPassword').touched">
+        Confirm Password is not empty
+      </div>
+
+      <div class="alert alert-danger" *ngIf="userForm.controls.pass.hasError('confirmPass') && userForm.controls.pass.touched">Password not same</div>
+    </div>
+    <div class="mb-3" formGroupName="country">
+      <label for="country" class="form-label">Country</label>
+      <select class="form-select" aria-label="Default select example" id="country" formControlName="id">
+        <option selected disabled>Open this select menu</option>
+        <option *ngFor="let item of countries" value="{{item.id}}">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="alert alert-danger" *ngIf="userForm.controls.country.get('id').hasError('required') && userForm.controls.country.get('id').touched">
+      Please choice!
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input type="text" class="form-control" id="age" formControlName="age" name="age">
+    </div>
+    <div class="alert alert-danger" *ngIf="userForm.controls.age.hasError('required') && userForm.controls.age.touched">
+      Age is not empty
+    </div>
+    <div class="alert alert-danger" *ngIf="userForm.controls.age.hasError('min') && userForm.controls.age.touched">
+      Age > 18
+    </div>
+    <div class="alert alert-danger" *ngIf="userForm.controls.age.hasError('max') && userForm.controls.age.touched">
+      Age < 100
+    </div>
+    <div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="1" id="male" checked formControlName="gender">
+        <label class="form-check-label" for="male">
+          Male
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="0" id="female"
+               formControlName="gender">
+        <label class="form-check-label" for="female">
+          FeMale
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="2" id="other"
+               formControlName="gender">
+        <label class="form-check-label" for="other">
+          Other
+        </label>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone Number</label>
+      <input type="text" class="form-control" id="phone" formControlName="phoneNumber" name="phoneNumber">
+    </div>
+    <div class="alert alert-danger" *ngIf="userForm.controls.phoneNumber.hasError('pattern') && userForm.controls.phoneNumber.touched">
+      Phone has pattern +84xxxxxxxxxx
+    </div>
+    <div class="alert alert-danger" *ngIf="errMessage">{{errMessage}}</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Country</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Phone Number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of users">
+      <td>{{item.email}}</td>
+      <td>{{item.password}}</td>
+      <td>
+        <div *ngFor="let i of countries">
+          <span *ngIf="i.id == item.country.id">
+          {{i.name}}
+        </span>
+        </div>
+      </td>
+      <td>{{item.age}}</td>
+      <td>
+        <div *ngIf="item.gender == 1">
+          Male
+        </div>
+        <div *ngIf="item.gender == 0">
+          FeMale
+        </div>
+        <div *ngIf="item.gender != 1 && item.gender != 0">
+          Other
+        </div>
+      </td>
+      <td>{{item.phoneNumber}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="w-25 m-auto border p-4">
+    <form [formGroup]="formUserLogin" (ngSubmit)="login()">
+      <h1 class="text-center">Login Form</h1>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email" name="email">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="formUserLogin.controls.email.hasError('required') && formUserLogin.controls.email.touched">Email is not empty</div>
+      <div class="alert alert-danger" *ngIf="formUserLogin.controls.email.hasError('email') && formUserLogin.controls.email.touched">Email invalid</div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password" name="password">
+      </div>
+      <div class="alert alert-danger" *ngIf="formUserLogin.controls.password.hasError('required') && formUserLogin.controls.password.touched">Password is not empty</div>
+      <div class="alert alert-danger" *ngIf="formUserLogin.controls.password.hasError('minlength') && formUserLogin.controls.password.touched">Password min length 6</div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <div class="alert alert-info" *ngIf="message">{{message}}</div>
+      <button type="submit" class="btn btn-info">Login</button>
+      <button type="submit" class="btn btn-warning float-end" [routerLink]="['/register']">Sign Up</button>
+    </form>
+  </div>
+</div>
