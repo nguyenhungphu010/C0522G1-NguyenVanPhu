@@ -6,20 +6,14 @@ import {ProductUpdateComponent} from './product/product-update/product-update.co
 import {ProductDeleteComponent} from './product/product-delete/product-delete.component';
 
 
-const routes: Routes = [{
-  path: 'product/list',
-  component: ProductListComponent
-}, {
-  path: 'product/create',
-  component: ProductCreateComponent
-},
+const routes: Routes = [
   {
-    path: 'product/edit/:productId',
-    component: ProductUpdateComponent
+    path: 'product',
+    loadChildren: () => import('./product/product.module').then(module => module.ProductModule)
   },
   {
-    path: 'product/delete/:productId',
-    component: ProductDeleteComponent
+    path: 'category',
+    loadChildren: () => import('./category/category.module').then(module => module.CategoryModule)
   }
 ];
 
