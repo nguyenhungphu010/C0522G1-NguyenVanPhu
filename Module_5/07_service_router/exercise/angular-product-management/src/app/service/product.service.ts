@@ -25,8 +25,8 @@ export class ProductService {
     return this.http.get<Product>(this.API_URL + '/' + id);
   }
 
-  updateProduct(id: number, product: Product): Observable<Product> {
-    return this.http.put<Product>(this.API_URL + '/' + id, product);
+  updateProduct(product: Product): Observable<Product> {
+    return this.http.put<Product>(this.API_URL + '/' + product.id, product);
   }
 
   deleteProduct(id: number): Observable<Product> {

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CategoryService} from '../../service/category.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Category} from '../../model/category';
 
 @Component({
   selector: 'app-category-delete',
@@ -10,27 +11,38 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 })
 export class CategoryDeleteComponent implements OnInit {
   categoryForm: FormGroup;
-  id: number;
+  categoryId: number;
+  category: Category;
+
   constructor(private categoryService: CategoryService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.id = +paramMap.get('id');
-      const category = this.getCategory(this.id);
-      this.categoryForm = new FormGroup({
-        id: new FormControl(category.id),
-        name: new FormControl(category.name),
-      });
-    });
   }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(value => {
+      this.categoryId = Number(value.get('id'));
+    });
+    this.categoryService.findById(this.categoryId).subscribe(value => {
+      this.category = value;
+      this.categoryForm.patchValue(this.category);
+    });
+    this.categoryForm = new FormGroup({
+      id: new FormControl(),
+      name: new FormControl(),
+    });
   }
-  getCategory(id: number) {
-    return this.categoryService.findById(id);
-  }
+
+
   deleteCategory(id: number) {
-    this.categoryService.deleteCategory(id);
-    this.router.navigate(['/category/list']);
+    this.categoryService.deleteCategory(id).subscribe(value => {
+
+    }, error => {
+
+    }, () => {
+      alert('Delete successfull');
+      this.router.navigateByUrl('/category/list');
+    });
   }
+
 }

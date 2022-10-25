@@ -42,22 +42,12 @@
     },
     {
       "id": 5,
-      "name": "IPhone 11 Pro",
+      "name": "Samsung Smart Oled",
       "price": 1895000,
       "description": "Like new",
       "category": {
-        "id": 1,
-        "name": "Điện thoại"
-      }
-    },
-    {
-      "id": 10,
-      "name": "ASUS",
-      "price": 2000000,
-      "description": "New pro",
-      "category": {
-        "id": 5,
-        "name": "Máy giặt"
+        "id": 2,
+        "name": "Ti vi"
       }
     }
   ],

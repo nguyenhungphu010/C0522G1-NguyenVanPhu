@@ -5,6 +5,7 @@
     <td>Name</td>
     <td>Price</td>
     <td>Description</td>
+    <td>Category</td>
     <td>Update</td>
   </tr>
   <tr *ngFor="let pr of products; index as i">
@@ -12,6 +13,7 @@
     <td>{{pr.name}}</td>
     <td>{{pr.price}}</td>
     <td>{{pr.description}}</td>
+    <td>{{pr.category.name}}</td>
     <td>
       <a [routerLink]="['/product/edit',pr.id]">Update</a>
       <a routerLink="/product/edit/{{pr.id}}">Update</a>
