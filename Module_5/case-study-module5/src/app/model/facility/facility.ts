@@ -3,16 +3,16 @@ import {RentType} from "./rent-type";
 
 export interface Facility {
   id?: number;
-  name?: string;
-  area?: number;
-  cost?: number;
+  facilityName?: string;
+  facilityArea?: number;
+  facilityCost?: number;
   maxPeople?: number;
   rentType?: RentType;
   facilityType?:FacilityType;
   standardRoom?: string;
-  convenience?: string;
+  descriptionOtherConvenience?: string;
   poolArea?: number;
-  floors?: number;
+  numberOfFloors?: number;
   facilityFree?: string;
 }
 

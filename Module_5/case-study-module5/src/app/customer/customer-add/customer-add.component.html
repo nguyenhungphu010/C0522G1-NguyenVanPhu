@@ -1,1 +1,78 @@
-<p>customer-add works!</p>
+<div class="container" id="content">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt="" width="72" height="120">
+      <h2>Furama Customer Management</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Employee New Information </h4>
+        <form [formGroup]="customerForm" (ngSubmit)="createCustomer()" >
+          <input type="hidden" >
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="name" class="form-label">Customer Name</label>
+              <input type="text" class="form-control" id="name" name="customerName" placeholder="" required formControlName="customerName">
+            </div>
+
+            <div class="col-12">
+              <label for="birthDay" class="form-label">Day of Birth <span class="text-muted"></span></label>
+              <input type="date" class="form-control" id="birthDay" name="customerBirthday"  placeholder="yyyy/mm/dd" formControlName="customerBirthday">
+              <div class="mb-4 text-danger"></div>
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Gender <span class="text-muted"></span></label>
+              <div class="d-flex">
+                <label class="d-block me-4">
+                  <input type="radio" name="customerGender" formControlName="customerGender" value="0">
+                  <i class="fa-solid fa-mars"></i> Male
+                </label>
+                <label class="d-block">
+                  <input type="radio"  name="customerGender" formControlName="customerGender" value="1">
+                  <i class="fa-solid fa-venus"></i> Female
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="IDCard" class="form-label">ID Card <span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="IDCard" name="IDCard" placeholder="01234567" formControlName="customerIdCard">
+              <div class="mb-4 text-danger" ></div>
+            </div>
+
+            <div class="col-12">
+              <label for="phoneNumber" class="form-label">Phone Number<span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="phoneNumber" name="customerPhone" placeholder="" formControlName="customerPhone">
+              <div class="mb-4 text-danger" ></div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email<span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="email" name="customerEmail" placeholder="you@example.com" formControlName="customerEmail">
+              <div class="mb-4 text-danger" ></div>
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Customer Type</label>
+              <select class="form-select" type="text"  formControlName="customerType" >
+                <option *ngFor="let type of customerType"
+                        [ngValue]="type">{{type.customerTypeName}}</option>
+              </select>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address" name="customerAddress" placeholder="1234 Main St" required formControlName="customerAddress" >
+              <div class="mb-4 text-danger" ></div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">UPDATE</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

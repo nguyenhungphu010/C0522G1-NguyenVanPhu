@@ -1,1 +1,109 @@
-<p>customer-list works!</p>
+<div class="container-fluid align-content-center" id="content">
+  <div class="row mt-5 mb-5" >
+    <div class="col-3">
+      <div class="container-fluid m-auto">
+        <a routerLink="/customer/create" class="btn btn-success">Create new Customer</a>
+      </div>
+    </div>
+    <div class="col-6 text-center">
+      <h2>Customer List</h2>
+    </div>
+    <div class="col-3">
+      <div class="d-flex w-100 " >
+        <input type="hidden" name="action" value="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchParam"  id="inputSearch" >
+        <button class="btn btn-outline-success" type="button" id="btnSearch">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover text-center" id="myTable">
+    <thead>
+    <tr class="table-info">
+      <td>No.</td>
+      <td>Customer Type</td>
+      <td>Name</td>
+      <td>Day of Birth</td>
+      <td>Gender</td>
+      <td>ID Card</td>
+      <td>Phone Number</td>
+      <td>Email</td>
+      <td>Address</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let customer of customerList | paginate: { itemsPerPage: 3, currentPage: p }, index as i">
+      <td> {{i +1 }}</td>
+      <td >{{customer.customerType.customerTypeName}}</td>
+      <td >{{customer.customerName}}</td>
+      <td >{{customer.customerBirthday}}</td>
+      <td >
+        <span *ngIf="customer.customerGender == 0">Male</span>
+        <span *ngIf="customer.customerGender == 1">Female</span>
+      </td>
+      <td >{{customer.customerIdCard}}</td>
+
+      <td >{{customer.customerPhone}}</td>
+      <td >{{customer.customerEmail}}</td>
+      <td >{{customer.customerAddress}}</td>
+
+      <td><a class="btn btn-outline-warning" routerLink="/customer/edit/{{customer.id}}">
+        edit
+      </a></td>
+      <td>
+<!--         Button trigger modal-->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#staticBackdropDelete" (click)="getInfoCustomerDelete(customer.id, customer.customerName)">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <!-- Modal -->
+ </div>
+<div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+
+      <div class="modal-content" [formGroup]="formDelete">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" >
+          <input type="text" id="deleteId"  name="IdCustomer" formControlName="id">
+          <span>Are you sure to delete? </span>
+          <input id="deleteName" formControlName="name"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+          <button  class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteCustomer()">YES</button>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+<!--page split-->
+<!--<nav aria-label="..." class="d-flex justify-content-center">-->
+<!--  <ul class="pagination">-->
+<!--    <li class="page-item">-->
+<!--      <a class="page-link" (click)="previous()" *ngIf="curPage >= 1" id="aPrevious">Previous</a>-->
+<!--    </li>-->
+<!--    <li class="page-item disabled" *ngIf="curPage <= 1">-->
+<!--      <a class="page-link" id="pageNumber">-->
+<!--        <a href="" [text]="curPage"></a>-->
+<!--        /-->
+<!--        <a href="" [text]="totalPage"></a>-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="page-item">-->
+<!--      <a class="page-link" (click)="next()" *ngIf="curPage < totalPage" id="aNext">Next</a>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</nav>-->

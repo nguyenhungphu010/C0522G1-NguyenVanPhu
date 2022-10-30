@@ -17,7 +17,7 @@ export class ProductService {
     return this.http.get<Product[]>(this.API_URL);
   }
 
-  saveProduct(product): Observable<Product> {
+  saveProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.API_URL , product);
   }
 

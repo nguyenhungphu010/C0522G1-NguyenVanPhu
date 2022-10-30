@@ -1,1 +1,111 @@
-<p>facility-list works!</p>
+<div class="container-fluid align-content-center" id="content">
+  <div class="row mt-5 mb-5" >
+    <div class="col-3">
+      <div class="container-fluid m-auto">
+        <a routerLink="/facility/create" class="btn btn-success">Create new Service</a>
+      </div>
+    </div>
+    <div class="col-6 text-center">
+      <h2>Facility List</h2>
+    </div>
+    <div class="col-3">
+      <div class="d-flex w-100" >
+        <input type="hidden" name="action" value="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchParam"  id="inputSearch" >
+        <button class="btn btn-outline-success" type="submit" id="btnSearch">Search</button>
+      </div>
+    </div>
+  </div>
+
+
+  <table class="table table-hover text-center" id="myTable">
+    <thead>
+    <tr class="table-info">
+      <td>No.</td>
+      <td>Service Name</td>
+      <td>Area</td>
+      <td>Cost</td>
+      <td>Max People</td>
+      <td>Rental Type</td>
+      <td>Facility Type</td>
+      <td>Standard Room</td>
+      <td>Convenience</td>
+      <td>Pool Area</td>
+      <td>Floor</td>
+      <td>Free Service</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let facility of facilityList | paginate: { itemsPerPage: 3, currentPage: p }, index as i">
+      <td>{{i+1}}</td>
+      <td>{{facility.facilityName}}</td>
+      <td>{{facility.facilityArea}}</td>
+      <td>{{facility.facilityCost}}</td>
+      <td>{{facility.maxPeople}}</td>
+      <td>{{facility.rentType.rentTypeName}}</td>
+      <td>{{facility.facilityType.facilityTypeName}}</td>
+      <td>{{facility.standardRoom}}</td>
+      <td>{{facility.descriptionOtherConvenience}}</td>
+      <td>{{facility.poolArea}}</td>
+      <td>{{facility.numberOfFloors}}</td>
+      <td>{{facility.facilityFree}}</td>
+      <td><a class="btn btn-outline-warning" routerLink="/facility/edit/{{facility.id}}">
+        edit
+      </a></td>
+      <td>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#staticBackdropDelete" (click)="getInfoFacilityDelete(facility.id, facility.facilityName)" >
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+       data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div  id="formDelete">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="deleteId" hidden name="IdFacility" >
+            <span>Are you sure to delete? </span> <span id="deleteName">{{facilityNameDelete}}</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteFacility()">YES</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Page plit-->
+<!--<nav aria-label="..." class="d-flex justify-content-center">-->
+<!--  <ul class="pagination">-->
+<!--    <li class="page-item">-->
+<!--      <a class="page-link" href=""  id="aPrevious">Previous</a>-->
+<!--    </li>-->
+<!--    <li class="page-item disabled">-->
+<!--      <a class="page-link" id="pageNumber">-->
+<!--        <span text="${facilityList.number + 1}"></span>-->
+<!--        /-->
+<!--        <span text="${facilityList.totalPages}"></span>-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="page-item">-->
+<!--      <a class="page-link" href="@{/facilities/list(page=${facilityList.number + 1} )}" id="aNext">Next</a>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</nav>-->
+

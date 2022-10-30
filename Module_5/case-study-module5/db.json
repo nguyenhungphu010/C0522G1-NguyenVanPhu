@@ -1,0 +1,353 @@
+{
+  "facilities": [
+    {
+      "id": 2,
+      "facilityName": "House Princess",
+      "facilityArea": 1000,
+      "facilityCost": 1000000,
+      "maxPeople": 10,
+      "standardRoom": "Vip",
+      "descriptionOtherConvenience": "Có hồ bơi",
+      "poolArea": 200,
+      "numberOfFloors": 5,
+      "facilityFree": "",
+      "rentType": {
+        "id": 2,
+        "rentTypeName": "Month"
+      },
+      "facilityType": {
+        "id": 2,
+        "facilityTypeName": "House"
+      }
+    },
+    {
+      "id": 3,
+      "facilityName": "Room Princess Super",
+      "facilityArea": 1000,
+      "facilityCost": 1000000,
+      "maxPeople": 10,
+      "standardRoom": "Vip",
+      "descriptionOtherConvenience": "Có hồ bơi",
+      "poolArea": 200,
+      "numberOfFloors": 5,
+      "facilityFree": "",
+      "rentType": {
+        "id": 3,
+        "rentTypeName": "Day"
+      },
+      "facilityType": {
+        "id": 3,
+        "facilityTypeName": "Room"
+      }
+    },
+    {
+      "id": 4,
+      "facilityName": "Villa Princess",
+      "facilityArea": 1000,
+      "facilityCost": 1000000,
+      "maxPeople": 10,
+      "standardRoom": "Vip",
+      "descriptionOtherConvenience": "Có hồ bơi",
+      "poolArea": 200,
+      "numberOfFloors": 5,
+      "facilityFree": "",
+      "rentType": {
+        "id": 3,
+        "rentTypeName": "Day"
+      },
+      "facilityType": {
+        "id": 1,
+        "facilityTypeName": "Villa"
+      }
+    },
+    {
+      "id": 5,
+      "facilityName": "Villa Beach Front",
+      "facilityArea": 1000,
+      "facilityCost": 1000000,
+      "maxPeople": 10,
+      "standardRoom": "Vip",
+      "descriptionOtherConvenience": "Có hồ bơi",
+      "poolArea": 200,
+      "numberOfFloors": 5,
+      "facilityFree": "",
+      "rentType": {
+        "id": 3,
+        "rentTypeName": "Day"
+      },
+      "facilityType": {
+        "id": 1,
+        "facilityTypeName": "Villa"
+      }
+    },
+    {
+      "id": 6,
+      "facilityName": "House Princess",
+      "facilityArea": 1000,
+      "facilityCost": 1000000,
+      "maxPeople": 10,
+      "standardRoom": "Vip",
+      "descriptionOtherConvenience": "Có hồ bơi",
+      "poolArea": 200,
+      "numberOfFloors": 5,
+      "facilityFree": "",
+      "rentType": {
+        "id": 2,
+        "rentTypeName": "Month"
+      },
+      "facilityType": {
+        "id": 2,
+        "facilityTypeName": "House"
+      }
+    },
+    {
+      "id": 7,
+      "facilityName": "Room Princess",
+      "facilityArea": 1000,
+      "facilityCost": 1000000,
+      "maxPeople": 10,
+      "standardRoom": "Vip",
+      "descriptionOtherConvenience": "Có hồ bơi",
+      "poolArea": 200,
+      "numberOfFloors": 5,
+      "facilityFree": "",
+      "rentType": {
+        "id": 3,
+        "rentTypeName": "Day"
+      },
+      "facilityType": {
+        "id": 3,
+        "facilityTypeName": "Room"
+      }
+    }
+  ],
+  "rentTypes": [
+    {
+      "id": 1,
+      "rentTypeName": "Year"
+    },
+    {
+      "id": 2,
+      "rentTypeName": "Month"
+    },
+    {
+      "id": 3,
+      "rentTypeName": "Day"
+    },
+    {
+      "id": 4,
+      "rentTypeName": "Time"
+    }
+  ],
+  "facilityTypes": [
+    {
+      "id": 1,
+      "facilityTypeName": "Villa"
+    },
+    {
+      "id": 2,
+      "facilityTypeName": "House"
+    },
+    {
+      "id": 3,
+      "facilityTypeName": "Room"
+    }
+  ],
+  "customerTypes": [
+    {
+      "id": 1,
+      "customerTypeName": "Member"
+    },
+    {
+      "id": 2,
+      "customerTypeName": "Silver"
+    },
+    {
+      "id": 3,
+      "customerTypeName": "Gold"
+    },
+    {
+      "id": 4,
+      "customerTypeName": "Platinium"
+    },
+    {
+      "id": 5,
+      "customerTypeName": "Diamond"
+    }
+  ],
+  "customers": [
+    {
+      "id": 2,
+      "customerName": "Dương Văn Quan",
+      "customerBirthday": "1995-12-09",
+      "customerGender": "Male",
+      "customerIdCard": "543432111",
+      "customerPhone": "0490039241",
+      "customerEmail": "duongquan@gmail.com",
+      "customerAddress": "K453/12 Lê Lợi, Đà Nẵng",
+      "customerType": {
+        "id": 1,
+        "customerTypeName": "Diamond"
+      }
+    },
+    {
+      "id": 3,
+      "customerName": "Hoàng Trần Nhi Anh",
+      "customerBirthday": "2000-03-20",
+      "customerGender": "Female",
+      "customerIdCard": "096943753",
+      "customerPhone": "0905467894",
+      "customerEmail": "thuytien2003@gmail.com",
+      "customerAddress": "194 Vũ Miên",
+      "customerType": {
+        "id": 1,
+        "customerTypeName": "Diamond"
+      }
+    },
+    {
+      "id": 4,
+      "customerName": "Hoàng Trần Nhi Nhi",
+      "customerBirthday": "1995-12-09",
+      "customerGender": "Female",
+      "customerIdCard": "795453345",
+      "customerPhone": "0312345678",
+      "customerEmail": "nhinhi123@gmail.com",
+      "customerAddress": "224 Lý Thái Tổ, Gia Lai",
+      "customerType": {
+        "id": 4,
+        "customerTypeName": "Silver"
+      }
+    },
+    {
+      "id": 5,
+      "customerName": "Nguyễn Hà Duyên",
+      "customerBirthday": "2000-07-23",
+      "customerGender": "Female",
+      "customerIdCard": "206236476",
+      "customerPhone": "0919436753",
+      "customerEmail": "dndgh@gmail.com",
+      "customerAddress": "hòa Khánh",
+      "customerType": {
+        "id": 1,
+        "customerTypeName": "Diamond"
+      }
+    },
+    {
+      "id": 6,
+      "customerName": "Nguyễn Tâm Đắc",
+      "customerBirthday": "1989-07-01",
+      "customerGender": "Male",
+      "customerIdCard": "432341235",
+      "customerPhone": "0643343433",
+      "customerEmail": "dactam@gmail.com",
+      "customerAddress": "22 Ngô Quyền, Đà Nẵng",
+      "customerType": {
+        "id": 2,
+        "customerTypeName": "Platinum"
+      }
+    },
+    {
+      "id": 7,
+      "customerName": "Phạm Xuân Diệu",
+      "customerBirthday": "1992-08-08",
+      "customerGender": "Male",
+      "customerIdCard": "865342123",
+      "customerPhone": "0954333333",
+      "customerEmail": "xuandieu92@gmail.com",
+      "customerAddress": "K77/22 Thái Phiên, Quảng Trị",
+      "customerType": {
+        "id": 3,
+        "customerTypeName": "Gold"
+      }
+    },
+    {
+      "id": 8,
+      "customerName": "Thuy Tien",
+      "customerBirthday": "20/03/2000",
+      "customerGender": "female",
+      "customerIdCard": "093279214712",
+      "customerPhone": "0905467894",
+      "customerEmail": "thuyen@gmail.com",
+      "customerAddress": "Hà Nội",
+      "customerType": {
+        "id": 2,
+        "customerTypeName": "Platinum"
+      }
+    },
+    {
+      "customerName": "Thuy Tien cute",
+      "customerBirthday": "20/03/2000",
+      "customerGender": "female",
+      "customerIdCard": "093279214712",
+      "customerPhone": "0905467894",
+      "customerEmail": "thuytien2003@gmail.com",
+      "customerAddress": "hòa Khánh",
+      "customerType": {
+        "id": 3,
+        "customerTypeName": "Gold"
+      },
+      "id": 9
+    },
+    {
+      "id": 10,
+      "customerName": "Võ Văn Tý Tiên",
+      "customerEmail": "tien.map.mo@gmail.com",
+      "customerPhone": "0905041936",
+      "customerAddress": "chùa Linh Ứng, Đà Nẵng",
+      "customerType": {
+        "id": 3,
+        "customerTypeName": "Gold"
+      },
+      "customerBirthday": "2022-10-04",
+      "customerGender": "1",
+      "customerIdCard": "12121212"
+    }
+  ],
+  "contracts": [
+    {
+      "id": 1,
+      "contractStartDate": "2020-12-08",
+      "contractEndDate": "2020-12-08",
+      "contractDeposit": "200000",
+      "employee": "Võ Văn Tý",
+      "customer": "Thủy Điên",
+      "facility": "Villa Beach Front"
+    },
+    {
+      "id": 2,
+      "contractStartDate": "2020-12-08",
+      "contractEndDate": "2020-12-08",
+      "contractDeposit": "200000",
+      "employee": "Võ Văn Tý",
+      "customer": "Thủy Điên",
+      "facility": "Villa Beach Front"
+    },
+    {
+      "id": 3,
+      "contractStartDate": "2020-12-08",
+      "contractEndDate": "2020-12-08",
+      "contractDeposit": "200000",
+      "employee": "Võ Văn Tý",
+      "customer": "Thủy Điên",
+      "facility": "Villa Beach Front"
+    },
+    {
+      "id": 4,
+      "contractStartDate": "2020-12-08",
+      "contractEndDate": "2020-12-08",
+      "contractDeposit": "200000",
+      "employee": "Võ Văn Tý",
+      "customer": "Thủy Điên",
+      "facility": "Villa Beach Front"
+    },
+    {
+      "id": 5,
+      "contractStartDate": "2020-12-08",
+      "contractEndDate": "2020-12-08",
+      "contractDeposit": "200000",
+      "employee": "Võ Văn Tý",
+      "customer": "Thủy Điên",
+      "facility": "Villa Beach Front"
+    }
+  ]
+}

@@ -1,1 +1,108 @@
-<p>facility-edit works!</p>
+<div class="container" id="content">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt=""
+           width="72" height="120">
+      <h2>Furama Service Management</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Service Information to edit </h4>
+        <form [formGroup]="facilityForm" (ngSubmit)="updateFacility()" >
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="service_type" class="form-label">Service Selection<span class="text-muted"></span></label>
+<!--              <select id="service_type" class="form-select"-->
+<!--                       [compareWith]="compareWithId" formControlName="facilityType" >-->
+<!--                <option value="">Select the Service</option>-->
+<!--                <option *ngFor="let type of facilityTypeList"-->
+<!--                        [ngValue]="type">{{type.facilityTypeName}}</option>-->
+<!--              </select>-->
+              <input type="text" readonly class="form-control" name="idFacility" id="service_type"
+                     placeholder=""  value="{{facilityTypeDisplay}}">
+            </div>
+            <div class="col-12">
+              <label for="service_id" class="form-label">Service ID</label>
+              <input type="text" readonly class="form-control" name="idFacility" id="service_id"
+                     placeholder="" formControlName="id">
+            </div>
+            <div class="col-12">
+              <label for="service_name" class="form-label">Service Name</label>
+              <input type="text" class="form-control" name="name" id="service_name"
+                     formControlName="facilityName" required>
+              <div class="mb-4 text-danger"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="area" class="form-label">Area<span class="text-muted"></span></label>
+              <input type="number" class="form-control" name="area" id="area" formControlName="facilityArea">
+              <div class="mb-4 text-danger"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="cost" class="form-label">Cost<span class="text-muted"></span></label>
+              <input type="number" class="form-control" name="cost" id="cost" formControlName="facilityCost">
+              <div class="mb-4 text-danger"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="max_people" class="form-label">Max People <span
+                class="text-muted"></span></label>
+              <input type="number" class="form-control" name="maxPeople" id="max_people" formControlName="maxPeople">
+              <div class="mb-4 text-danger"></div>
+            </div>
+
+            <div class="col-12">
+              <label for="rent_type" class="form-label">Rent Type<span class="text-muted"></span></label>
+              <select name="rentType" id="rent_type" class="form-select" [compareWith]="compareWithId"
+                      formControlName="rentType">
+                <option value="">Select Rent Type</option>
+                <option *ngFor="let type of rentTypeList"
+                        [ngValue]="type">{{type.rentTypeName}}</option>
+              </select>
+            </div>
+            <div id="house">
+
+              <div class="col-12" *ngIf="facilityTypeDisplay === 'Villa' || facilityTypeDisplay === 'House'">
+                <label for="standard_room" class="form-label">Standard Room</label>
+                <input type="text" class="form-control" name="standardRoom" id="standard_room"
+                       formControlName="standardRoom" required>
+                <div class="mb-4 text-danger"></div>
+              </div>
+
+              <div class="col-12">
+                <label for="convenience" class="form-label">Convenience</label>
+                <input type="text" class="form-control" name="descriptionConvenience" id="convenience"
+                       formControlName="descriptionOtherConvenience" required>
+                <div class="mb-4 text-danger"></div>
+              </div>
+
+              <div class="col-12" *ngIf="facilityTypeDisplay === 'Villa' || facilityTypeDisplay === 'House'">
+                <label for="floor" class="form-label">Number of Floor</label>
+                <input type="number" class="form-control" name="floorNumb" id="floor"
+                       formControlName="numberOfFloors" required>
+                <div class="mb-4 text-danger"></div>
+              </div>
+
+              <div class="col-12" id="villa" *ngIf="facilityTypeDisplay === 'Villa'">
+                <label for="pool" class="form-label">Pool Area</label>
+                <input type="number" class="form-control" name="poolArea" id="pool"
+                       formControlName="poolArea" required>
+                <div class="mb-4 text-danger"></div>
+              </div>
+            </div>
+            <div class="col-12" id="room"  *ngIf="facilityTypeDisplay === 'Room'">
+              <label for="free_facility" class="form-label">Free Facility</label>
+              <input type="text" class="form-control" name="freeFacility" id="free_facility"
+                     formControlName="facilityFree">
+              <div class="mb-4 text-danger"></div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
