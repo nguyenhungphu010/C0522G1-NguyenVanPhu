@@ -1,1 +1,83 @@
-<p>object-edit works!</p>
+<div class="container" id="content">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt=""
+           width="72" height="120">
+      <h2>Final Test Management Page</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3"> New Information </h4>
+        <form [formGroup]="objectForm" (ngSubmit)="updateObject()">
+          <input type="hidden">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="bookId" class="form-label">Saving Book Id</label>
+              <input type="number" readonly class="form-control" id="bookId" name="customerName" placeholder="" required
+                     formControlName="id">
+            </div>
+            <div class="col-12" aria-readonly="true">
+              <label for="rent_type" class="form-label">Customer Id<span class="text-muted"></span></label>
+              <select name="rentType" id="rent_type" class="form-select" [compareWith]="compareWithId"
+                      formControlName="objectType">
+                <option value="">Customer Id</option>
+                <option *ngFor="let type of objectTypeList"
+                        [ngValue]="type">{{type.id}}</option>
+              </select>
+            </div>
+
+            <div class="col-12" aria-readonly="true">
+              <label for="customerName" class="form-label">Customer Name<span class="text-muted"></span></label>
+              <select name="rentType" id="customerName" class="form-select" [compareWith]="compareWithId"
+                      formControlName="objectType">
+                <option value="">Customer name</option>
+                <option *ngFor="let type of objectTypeList"
+                        [ngValue]="type">{{type.name}}</option>
+              </select>
+
+              <div class="col-12">
+                <label for="openDate" class="form-label">Open Date <span class="text-muted"></span></label>
+                <input type="date" class="form-control" id="openDate" name="openDate" formControlName="openDate">
+                <div class="mb-4 text-danger"></div>
+              </div>
+              <div class="col-12">
+                <label for="savingDate" class="form-label">Saving Date <span class="text-muted"></span></label>
+                <input type="date" class="form-control" id="savingDate" name="savingDate" formControlName="savingDate">
+                <div class="mb-4 text-danger"></div>
+              </div>
+              <div class="col-12">
+                <label for="period" class="form-label">Period<span class="text-muted"></span></label>
+                <input type="text" class="form-control" id="period" name="period" placeholder=""
+                       formControlName="period">
+                <div class="mb-4 text-danger"></div>
+              </div>
+
+              <div class="col-12">
+                <label for="savingAmount" class="form-label">Saving Amount<span class="text-muted"></span></label>
+                <input type="text" class="form-control" id="savingAmount" name="savingAmount"
+                       formControlName="savingAmount">
+                <div class="mb-4 text-danger"></div>
+              </div>
+
+              <div class="col-12">
+                <label for="interestRate" class="form-label">Saving Amount</label>
+                <input type="number" class="form-control" id="interestRate" name="interestRate" required
+                       formControlName="interestRate">
+                <div class="mb-4 text-danger"></div>
+              </div>
+
+              <div class="col-12">
+                <label for="promotion" class="form-label">Promotion</label>
+                <input type="text" class="form-control" id="promotion" name="promotion" required
+                       formControlName="promotion">
+                <div class="mb-4 text-danger"></div>
+              </div>
+            </div>
+            <hr class="my-4">
+            <button class="w-100 btn btn-primary btn-lg" type="submit">UPDATE</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

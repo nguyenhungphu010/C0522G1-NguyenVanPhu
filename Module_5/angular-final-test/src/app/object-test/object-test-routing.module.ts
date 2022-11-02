@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ObjectListComponent} from './object-list/object-list.component';
 import {ObjectEditComponent} from './object-edit/object-edit.component';
-import {BodyComponent} from '../body/body.component';
+import {ObjectCreateComponent} from './object-create/object-create.component';
 
 
 const routes: Routes = [
@@ -15,11 +15,8 @@ const routes: Routes = [
     component: ObjectEditComponent,
   },
   {
-    path: 'create', component: ObjectEditComponent,
+    path: 'create', component: ObjectCreateComponent,
   },
-  {
-    path: '', component: BodyComponent,
-  }
 ];
 
 @NgModule({

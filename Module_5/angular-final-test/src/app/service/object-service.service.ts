@@ -9,8 +9,8 @@ import {ObjectType} from '../model/object-type';
   providedIn: 'root'
 })
 export class ObjectServiceService {
-  private API_URL = 'http://localhost:3000/customers';
-  private API_URL_CUSTOMER_TYPE = 'http://localhost:3000/customerTypes';
+  private API_URL = '  http://localhost:3000/objectList';
+  private API_URL_CUSTOMER_TYPE = '  http://localhost:3000/objectTypes';
 
   constructor(private http: HttpClient) {
   }
@@ -21,6 +21,10 @@ export class ObjectServiceService {
 
   getAllObjectDataType(): Observable<ObjectType[]> {
     return this.http.get<ObjectType[]>(this.API_URL_CUSTOMER_TYPE);
+  }
+
+  getObjectTypeById(id: number): Observable<ObjectType> {
+    return this.http.get<ObjectType>(this.API_URL_CUSTOMER_TYPE + '/' + id);
   }
 
   findById(id: number): Observable<ObjectData> {
@@ -36,7 +40,14 @@ export class ObjectServiceService {
   }
 
   deleteObjectData(id: number): Observable<void> {
-    alert(this.API_URL + '/' + id);
     return this.http.delete<void>(this.API_URL + '/' + id);
+  }
+
+  searchCustomerByName(nameSearch: string, idSearch: string): Observable<ObjectData[]> {
+    if (Number(idSearch) > 0) {
+      return this.http.get<ObjectData[]>(this.API_URL + '?objectType.name_like=' + nameSearch + '&id=' + idSearch);
+    } else {
+      return this.http.get<ObjectData[]>(this.API_URL + '?objectType.name_like=' + nameSearch);
+    }
   }
 }

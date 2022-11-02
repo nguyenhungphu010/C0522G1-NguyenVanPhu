@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ObjectServiceService} from '../../service/object-service.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObjectData} from '../../model/object-data';
 import {ObjectType} from '../../model/object-type';
 
@@ -13,8 +13,10 @@ import {ObjectType} from '../../model/object-type';
 export class ObjectEditComponent implements OnInit {
 
   objectForm: FormGroup;
+  customerForm: FormGroup;
   objectId: number;
   objectData: ObjectData;
+  objectType: ObjectType;
   objectTypeList: ObjectType[];
 
   constructor(private  objectServiceService: ObjectServiceService,
@@ -33,14 +35,13 @@ export class ObjectEditComponent implements OnInit {
     });
     this.objectForm = new FormGroup({
       id: new FormControl(),
-      customerName: new FormControl(),
-      customerEmail: new FormControl(),
-      customerPhone: new FormControl(),
-      customerAddress: new FormControl(),
-      customerType: new FormControl(),
-      customerBirthday: new FormControl(),
-      customerGender: new FormControl(),
-      customerIdCard: new FormControl(),
+      objectType: new FormControl('', Validators.required),
+      openDate: new FormControl('', Validators.required),
+      savingDate: new FormControl('', Validators.required),
+      period: new FormControl('', Validators.required),
+      savingAmount: new FormControl('', Validators.required),
+      interestRate: new FormControl('', Validators.required),
+      promotion: new FormControl('', Validators.required),
     });
     this.getAllType();
     console.log(this.objectData);
@@ -52,7 +53,7 @@ export class ObjectEditComponent implements OnInit {
     });
   }
 
-  updateCustomer(): void {
+  updateObject(): void {
     const customerAfter = this.objectForm.value;
     customerAfter.id = this.objectData.id;
     this.objectServiceService.updateObjectData(customerAfter).subscribe(value => {
@@ -63,5 +64,9 @@ export class ObjectEditComponent implements OnInit {
       alert('update successfully');
       this.router.navigateByUrl('object/list');
     });
+  }
+
+  compareWithId(item1, item2) {
+    return item1 && item2 && item1.id === item2.id;
   }
 }

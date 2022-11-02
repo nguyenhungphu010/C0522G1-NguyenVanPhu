@@ -1,19 +1,52 @@
 {
-  "posts": [
+  "objectList": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "openDate": "2022-10-21",
+      "savingDate": "2022-10-31",
+      "period": "3 months",
+      "savingAmount": 10000000,
+      "interestRate": 8,
+      "promotion": "condom",
+      "objectType": {
+        "id": 2,
+        "name": "Mark Zuckerbert"
+      }
+    },
+    {
+      "id": 2,
+      "openDate": "2022-10-21",
+      "savingDate": "2022-10-31",
+      "period": "3 months",
+      "savingAmount": 10000000,
+      "interestRate": 8,
+      "promotion": "condom",
+      "objectType": {
+        "id": 2,
+        "name": "Mark Zuckerbert"
+      }
     }
   ],
-  "comments": [
+  "objectTypes": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "name": "Jeff Bezos"
+    },
+    {
+      "id": 2,
+      "name": "Mark Zuckerbert"
+    },
+    {
+      "id": 3,
+      "name": "Elon Musk"
+    },
+    {
+      "id": 4,
+      "name": "Bill Gates"
+    },
+    {
+      "id": 5,
+      "name": "Bac Vuong"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

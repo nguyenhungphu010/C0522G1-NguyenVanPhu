@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ObjectData} from '../../model/object-data';
 import {ObjectType} from '../../model/object-type';
 import {ObjectServiceService} from '../../service/object-service.service';
@@ -24,14 +24,8 @@ export class ObjectCreateComponent implements OnInit {
     this.getAllType();
     this.objectForm = new FormGroup({
       id: new FormControl(),
-      customerName: new FormControl(),
-      customerEmail: new FormControl(),
-      customerPhone: new FormControl(),
-      customerAddress: new FormControl(),
-      customerType: new FormControl(),
-      customerBirthday: new FormControl(),
-      customerGender: new FormControl(),
-      customerIdCard: new FormControl(),
+      objectName: new FormControl('', Validators.pattern('^[a-z A-Z]{1,50}$')),
+      objectType: new FormControl(),
     });
   }
 

@@ -1,1 +1,83 @@
-<p>object-create works!</p>
+<div class="container" id="content">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="https://furamavietnam.com/wp-content/uploads/2018/08/logo.png" alt="" width="72" height="120">
+      <h2>Final Test Management Page</h2>
+    </div>
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Employee New Information </h4>
+        <form [formGroup]="objectForm" (ngSubmit)="createObject()" >
+          <input type="hidden" >
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="name" class="form-label">Customer Name</label>
+              <input type="text" class="form-control" id="name" name="customerName" placeholder="" required formControlName="objectName">
+            </div>
+            <div class="mb-3 text-danger"
+                 *ngIf="objectForm.controls.objectName.hasError('pattern')
+            && objectForm.controls.objectName.dirty">
+              Customer name not include number and the First character must uppercase!
+            </div>
+
+            <div class="col-12">
+              <label for="birthDay" class="form-label">Day of Birth <span class="text-muted"></span></label>
+              <input type="date" class="form-control" id="birthDay" name="customerBirthday"  placeholder="yyyy/mm/dd" formControlName="objectName">
+              <div class="mb-4 text-danger"></div>
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Gender <span class="text-muted"></span></label>
+              <div class="d-flex">
+                <label class="d-block me-4">
+                  <input type="radio" name="objectType" formControlName="objectType" value="0">
+                  <i class="fa-solid fa-mars"></i> Male
+                </label>
+                <label class="d-block">
+                  <input type="radio"  name="objectType" formControlName="objectType" value="1">
+                  <i class="fa-solid fa-venus"></i> Female
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="IDCard" class="form-label">ID Card <span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="IDCard" name="IDCard" placeholder="01234567" formControlName="objectName">
+              <div class="mb-4 text-danger" ></div>
+            </div>
+
+            <div class="col-12">
+              <label for="phoneNumber" class="form-label">Phone Number<span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="phoneNumber" name="customerPhone" placeholder="" formControlName="objectName">
+              <div class="mb-4 text-danger" ></div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email<span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="email" name="customerEmail" placeholder="you@example.com" formControlName="objectName">
+              <div class="mb-4 text-danger" ></div>
+            </div>
+
+            <div class="col-12">
+              <label  class="form-label">Customer Type</label>
+              <select class="form-select" type="text"  formControlName="objectName" >
+                <option *ngFor="let type of objectTypeList"
+                        [ngValue]="type">{{type.name}}</option>
+              </select>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address" name="customerAddress" placeholder="1234 Main St" required formControlName="objectName" >
+              <div class="mb-4 text-danger" ></div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">UPDATE</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

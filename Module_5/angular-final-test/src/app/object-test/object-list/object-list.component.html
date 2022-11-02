@@ -1,1 +1,88 @@
-<p>object-list works!</p>
+<div class="container-fluid align-content-center" id="content">
+  <div class="row mt-5 mb-5">
+    <div class="col-3">
+      <div class="container-fluid m-auto">
+        <a routerLink="/object/create" class="btn btn-success">Create new</a>
+      </div>
+    </div>
+    <div class="col-6 text-center">
+      <h2>Final Test List</h2>
+    </div>
+    <div class="col-3">
+      <div class="d-flex w-100 ">
+        <input  [(ngModel)]="customerIdSearch" class="form-control me-2" type="search" placeholder="id" aria-label="Search" name="searchParam">
+        <input [(ngModel)]="customerNameSearch" class="form-control me-2" type="search" placeholder="name" aria-label="Search" name="searchParam"
+               id="inputSearch">
+        <button (click)="searchByMore()" class="btn btn-outline-success" type="button" id="btnSearch">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover text-center" id="myTable">
+    <thead>
+    <tr class="table-info">
+      <td>No.</td>
+      <td>Customer Name</td>
+      <td>Customer Id</td>
+      <td>Opening Date</td>
+      <td>Saving Date</td>
+      <td>Period</td>
+      <td>Saving Amount (VND)</td>
+      <td>Interest Rate (%)</td>
+      <td>Promotion</td>
+      <td>Edit</td>
+      <td>Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let obj of objectList | paginate: { itemsPerPage: 3, currentPage: p }, index as i">
+
+      <td> {{i + 1 }}</td>
+      <td>{{obj.objectType.name}}</td>
+      <td>{{obj.objectType.id}}</td>
+      <td>{{obj.openDate}}</td>
+      <td>{{obj.savingDate}}</td>
+      <td>{{obj.period}}</td>
+      <td>{{obj.savingAmount}}</td>
+
+      <td>{{obj.interestRate}}</td>
+      <td>{{obj.promotion}}</td>
+
+      <td><a class="btn btn-outline-warning" routerLink="/object/edit/{{obj.id}}">
+        edit
+      </a></td>
+      <td>
+        <!--         Button trigger modal-->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#staticBackdropDelete" (click)="getInfoObjectDelete(obj.id, obj.objectType.name)">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <!-- Modal -->
+</div>
+<div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static"
+     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Are you sure to delete? </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="deleteId"></label><input type="text" id="deleteId" hidden name="IdCustomer">
+        <span>Are you sure to delete? </span><span id="deleteName">{{objectIdDelete}}</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteObject()">YES</button>
+      </div>
+    </div>
+
+  </div>
+</div>
