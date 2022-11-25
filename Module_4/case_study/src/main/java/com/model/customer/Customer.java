@@ -37,8 +37,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<Contract> contracts;
 
-
-
     public Customer() {
     }
 

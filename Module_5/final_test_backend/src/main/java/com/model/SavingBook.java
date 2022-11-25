@@ -1,5 +1,7 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,13 +13,16 @@ public class SavingBook {
     private Integer id;
     private String openDate;
     private String savingDate;
+    @Column(name = "period_customer")
     private String period;
     private Double savingAmount;
     private Double interestRate;
+    @Column(name = "promotion_customer")
     private String promotion;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JsonBackReference
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customers;
 
     public SavingBook(Integer id, String openDate, String savingDate, String period, Double savingAmount,

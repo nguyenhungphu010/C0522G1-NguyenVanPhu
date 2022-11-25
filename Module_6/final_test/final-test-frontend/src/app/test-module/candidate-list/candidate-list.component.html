@@ -1,0 +1,207 @@
+<div class="container container-lg container-md container-sm container-xl">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h2 class="text-light text-center">CANDIDATE LIST</h2>
+      <div class="row m-0">
+        <div class="col col-lg-6 col-md-12 col-sm-12">
+        </div>
+        <div class="col col-lg-3"></div>
+        <div class="col col-lg-3"></div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-2 p-1 pe-0">
+            <button class="button btnGreen greenBorder" style="height: 39px" routerLink="/candidate/create">
+              Thêm mới
+            </button>
+          </div>
+          <div class="col-10 p-1 pe-0">
+            <div class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="search by candidate name..."
+                     aria-label="Search" [(ngModel)]="nameSearch">
+<!--              <input class="form-control me-2" type="search" placeholder="search by candidate type..."-->
+<!--                     aria-label="Search" [(ngModel)]="typeSearch">-->
+              <select class="form-select me-2" [(ngModel)]="typeSearch">Search by Candidate Type
+                <option [ngValue]=1>Internship</option>
+                <option [ngValue]=2>Fresher</option>
+                <option [ngValue]=3>Experienced</option>
+              </select>
+              <button class="button btnGreen greenBorder" style="height: 38px; width: 50%" type="submit"
+                      (click)="paginate()">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row table-responsive-sm table-responsive-lg table-responsive-xxl">
+          <h3 *ngIf="!action" class="text-white text-xl-center">Can not find candidate</h3>
+
+          <table class="table table-sm table-active text-center " id="no-more-table" style="width: 100%">
+            <thead>
+            <tr class="bg bg-warning" style="text-align: center">
+              <th>No</th>
+              <th>
+                Name
+              </th>
+              <th>
+                Day of Birth
+              </th>
+              <th>
+                Phone number
+              </th>
+              <th colspan="3"></th>
+            </tr>
+            </thead>
+            <tbody class="text-black bg-body">
+            <tr *ngFor="let candidate of candidateList, index as i ">
+              <td *ngIf="candidate.id <10" data-tittle="Mã nhân viên" style="width: 10%"> NV000{{candidate.id}}</td>
+              <td *ngIf="candidate.id <100 && candidate.id >=10" data-tittle="Mã nhân viên" style="width: 10%">
+                NV00{{candidate.id}}</td>
+              <td *ngIf="candidate.id <1000 && candidate.id >=100" data-tittle="Mã nhân viên" style="width: 10%">
+                NV0{{candidate.id}}</td>
+              <td data-tittle="Name" style="width: 12.5%; text-align: left">{{candidate.name}}</td>
+              <td data-tittle="Day of Birth" style="width: 15%">{{candidate.dayOfBirth}}</td>
+              <td data-tittle="Phone number" style="width: 17.5%; text-align: left">{{candidate.phoneNumber }}</td>
+              <td style="width: 12.5%">
+                <button class="button btnYellow yellowBorder" (click)="deleteEmployee()">
+                  Delete
+                </button>
+              </td>
+              <td >
+                <div class="text-center wrapCss">
+                  <!-- Button trigger modal -->
+                  <button type="button" class=" button btnRed redBorder " data-bs-toggle="modal"
+                          data-bs-target="#exampleModal" (click)="getInfoCandidate(
+                          candidate.id, candidate.name,
+                              candidate.dayOfBirth, candidate.phoneNumber,
+                              candidate.experiencedYear, candidate.specialist,
+                              candidate.graduatedYear, candidate.graduatedResult,
+                              candidate.graduatedSchool, candidate.major,
+                              candidate.currentSemester,candidate.candidateType.type,
+                              candidate.interviewRecord.interviewer,candidate.interviewRecord.interviewResult.result,
+                              candidate.interviewRecord.interviewTime,candidate.interviewRecord.comment,
+                              candidate.interviewRecord.salary)">
+                    Detail Candidate
+                  </button>
+                </div>
+              </td>
+              <td style="width: 12.5%">
+                <div class="text-center wrapCss">
+                  <!-- Button trigger modal -->
+                  <button type="button" class=" button btnRed redBorder " data-bs-toggle="modal"
+                          data-bs-target="#exampleModal2" (click)="getInfoCandidate(
+                          candidate.id, candidate.name,
+                              candidate.dayOfBirth, candidate.phoneNumber,
+                              candidate.experiencedYear, candidate.specialist,
+                              candidate.graduatedYear, candidate.graduatedResult,
+                              candidate.graduatedSchool, candidate.major,
+                              candidate.currentSemester,candidate.candidateType.type,
+                              candidate.interviewRecord.interviewer,candidate.interviewRecord.interviewResult.result,
+                              candidate.interviewRecord.interviewTime,candidate.interviewRecord.comment,
+                              candidate.interviewRecord.salary)">
+                    Detail Interview
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--        Modal View Detail candidate-->
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" [formGroup]="candidateForm">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: black">Candidate detail: {{deleteName}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <br>
+                <label class="col-form-label lab">Candidate Name</label>
+                <input id="deleteName" formControlName="name" class="form-control" readonly>
+                <label class="col-form-label lab">Year of Experience</label>
+                <input id="deleteEmail" formControlName="experiencedYear" class="form-control" readonly>
+                <label class="col-form-label lab">Specialty Job</label>
+                <input id="deleteAddress" formControlName="specialist" class="form-control" readonly>
+                <label class="col-form-label lab">Year of Graduation</label>
+                <input id="deleteUser" formControlName="graduatedYear" class="form-control" readonly>
+                <label class="col-form-label lab">Graduation result</label>
+                <input id="deleteIdCard" formControlName="graduatedResult" class="form-control" readonly>
+                <label class="col-form-label lab">University</label>
+                <input id="deleteDayofBirth" formControlName="graduatedSchool" class="form-control" readonly>
+              </div>
+              <div class="modal-footer">
+                <!--                <button type="button" class="button btnRed redBorder"  data-bs-dismiss="modal">Xóa </button>-->
+                <button type="button" class="mx-2 button btnYellow yellowBorder " data-bs-dismiss="modal">Exit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        Modal View Detail Interview-->
+
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" [formGroup]="candidateForm">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2" style="color: black">Interview detail of candidate: {{deleteName}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <br>
+                <label class="col-form-label lab">Candidate Name</label>
+                <input id="candidateName" formControlName="name" class="form-control" readonly>
+                <label class="col-form-label lab">Year of Experience</label>
+                <input id="interviewer" formControlName="interviewRecordInterviewer" class="form-control" readonly>
+                <label class="col-form-label lab">Interview Result</label>
+                <input id="result" formControlName="interviewRecordResult" class="form-control" readonly>
+                <label class="col-form-label lab">Interview Time</label>
+                <input id="interviewTime" type="date" formControlName="interviewRecordTime" class="form-control" readonly>
+                <label class="col-form-label lab">Comment</label>
+                <input id="comment" formControlName="interviewRecordComment" class="form-control" readonly>
+                <label class="col-form-label lab">Salary</label>
+                <input id="salary" formControlName="interviewRecordSalary" class="form-control" readonly>
+              </div>
+              <div class="modal-footer">
+                <!--                <button type="button" class="button btnRed redBorder"  data-bs-dismiss="modal">Xóa </button>-->
+                <button type="button" class="mx-2 button btnYellow yellowBorder " data-bs-dismiss="modal">Exit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-2 col-sm-12 ms-0 p-0">
+            <div class="d-flex justify-content-between ms-0 p-0">
+              <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="paginate()">
+                <option [ngValue]="3">Display option</option>
+                <option [ngValue]="3">Display 3 rows</option>
+                <option [ngValue]="5">Display 5 rows</option>
+                <option [ngValue]="10">Display 10 rows</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-4"></div>
+          <div class="col-lg-3"></div>
+          <div class="col-lg-3 p-0 pt-1">
+            <div class='pagination-container'>
+              <div class="row">
+                <ngb-pagination
+                  [collectionSize]="(total$ | async)!"
+                  [(page)]="page"
+                  [maxSize]="pageSize"
+                  [pageSize]="pageSize"
+                  (pageChange)="paginate()"
+                >
+                </ngb-pagination>
+                <!--                <pre class="text-light">Trang hiện tại: {{page}}</pre>-->
+              </div>
+              <div class="row">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

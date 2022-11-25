@@ -1,9 +1,9 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -15,6 +15,7 @@ public class Customer {
     private Integer id;
     @Column(name = "customer_name")
     private String name;
+
 
     @OneToMany(mappedBy = "customers")
     private List<SavingBook> bookSet;

@@ -44,7 +44,6 @@ export class CustomerListComponent implements OnInit {
     }, () => {
       console.log("complete")
     });
-
   }
 
   getInfoCustomerDelete(customerId: number, customerName: string): void {
@@ -53,7 +52,6 @@ export class CustomerListComponent implements OnInit {
   }
 
   deleteCustomer(): void {
-
     this.customerIdDelete = Number(this.formDelete.value.id)
     this.customerService.deleteCustomer(this.customerIdDelete).subscribe(value => {
       alert("delete successfully");

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin()
+@CrossOrigin
 @RequestMapping("/final_test")
 public class FinalTestController {
 
