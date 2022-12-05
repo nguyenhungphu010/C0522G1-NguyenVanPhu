@@ -52,56 +52,52 @@ CREATE TABLE IF NOT EXISTS user_role (
         REFERENCES role (id),
     PRIMARY KEY (username , role_id)
 );
-CREATE TABLE IF NOT EXISTS bills (
+
+CREATE TABLE IF NOT EXISTS customers (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    role_id INT,
+    name VARCHAR(30),
+    phone_number VARCHAR(15),
+    day_of_birth VARCHAR(30),
+    email VARCHAR(100),
+    gender INT,
+    address VARCHAR(200),
+    username VARCHAR(30) UNIQUE,
     is_delete BIT DEFAULT 0,
     FOREIGN KEY (username)
-        REFERENCES user (username),
-    FOREIGN KEY (role_id)
-        REFERENCES role (id),
-    PRIMARY KEY (username , role_id)
+        REFERENCES user (username)
 );
-create table if not exists customers(
-	id int primary key auto_increment,
-	name varchar(30),
-    phone_number varchar(15),
-	day_of_birth varchar(30),
-    email varchar(100), 
-	gender int,
-	email varchar(100),
-	address varchar(200),
-	username varchar(30) unique,
-    is_delete bit default 0,
-	foreign key (username) references user(username)
+CREATE TABLE IF NOT EXISTS shipping (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    method VARCHAR(100),
+    price DOUBLE
 );
-create table if not exists shipping (
-id int primary key auto_increment, 
-method varchar(100), 
-price double
-); 
-create table if not exists orders(
-	id int primary key auto_increment,
-    book_id int, 
-    customer_id int, 
-    quantity smallint,
-	shipping_id int,
-    payment_method varchar(100), 
-	`status` varchar(100),
-	total double,
-	date_process varchar(50),
-	date_finish varchar(50),
-    is_delete bit default 0,
-	foreign key (book_id) references books(id), 
-	foreign key (customer_id) references customers(id),
-	foreign key (shipping_id) references shipping(id)
+CREATE TABLE IF NOT EXISTS orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    book_id INT,
+    customer_id INT,
+    quantity SMALLINT,
+    shipping_id INT,
+    payment_method VARCHAR(100),
+    `status` VARCHAR(100),
+    total DOUBLE,
+    date_process VARCHAR(50),
+    date_finish VARCHAR(50),
+    is_delete BIT DEFAULT 0,
+    FOREIGN KEY (book_id)
+        REFERENCES books (id),
+    FOREIGN KEY (customer_id)
+        REFERENCES customers (id),
+    FOREIGN KEY (shipping_id)
+        REFERENCES shipping (id)
 );
-create table if not exists order_detail(
-id int primary key auto_increment, 
-customer_id int, 
-order_id int, 
-foreign key (customer_id) references customers(id), 
-foreign key (order_id) references orders(id)
+CREATE TABLE IF NOT EXISTS order_detail (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    order_id INT,
+    FOREIGN KEY (customer_id)
+        REFERENCES customers (id),
+    FOREIGN KEY (order_id)
+        REFERENCES orders (id)
 );
 
 
