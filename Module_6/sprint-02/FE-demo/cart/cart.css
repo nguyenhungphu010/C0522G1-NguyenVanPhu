@@ -30,8 +30,8 @@ body {
 }
 
 table td {
-    border: solid 2px;
-    border-collapse: collapse;
+    /*border: solid 2px;*/
+    /*border-collapse: collapse;*/
 }
 table{
     width: 100%;
@@ -74,4 +74,10 @@ table{
     font-size: 1.2rem !important;
     color: #C92127;
     font-weight: 500;
+}
+.pay-block{
+    padding-right: 15px;
+}
+.pic-book-detail{
+    height: 10px;
 }
